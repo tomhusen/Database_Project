@@ -1,0 +1,111 @@
+<!-- Header Stuff -->
+<html><title> User Management </title>
+<link rel="stylesheet" type="text/css" href="test.css">
+<body>
+<div class="form-style-2">
+
+<!-- Heading at top of the page -->
+<div class="form-style-2-heading">
+Below is a list of current users - or you can add new users!
+</div>
+
+<!-- Styling for the Table -->
+<style>
+table{
+  border-collapse: collapse;
+}
+td, th{
+  border: 1px solid #dddddd;
+  text-align: center;
+  padding: 8px;
+}
+tr:nth-child(even){
+  background-color: #dddddd;
+}
+</style>
+
+<!-- Table of Users -->
+<h4><center>Current Users</center></h4>
+<table width=70% align="center">
+  <tr>
+    <th><u>User ID</u></th>
+    <th><u>Username</u></th>
+    <th><u>First Name</u></th>
+    <th><u>Last Name</u></th>
+    <th><u>Email Address</u></th>
+    <th><u>Password</u></th>
+  </tr>
+  <!-- Sample User #1 -->
+  <tr>
+    <th>1</th>
+    <th>sampleUser</th>
+    <th>John</th>
+    <th>Doe</th>
+    <th>email@csbsju.edu</th>
+    <th>********</th>
+  </tr>
+  <!-- Sample User #2 -->
+  <tr>
+    <th>2</th>
+    <th>sampleUserTwo</th>
+    <th>Jill</th>
+    <th>Smith</th>
+    <th>email@gmail.com</th>
+    <th>********</th>
+  </tr>
+  <!-- Sample User #3 -->
+  <tr>
+    <th>3</th>
+    <th>sampleUserThree</th>
+    <th>Imad</th>
+    <th>Rahal</th>
+    <th>irahal@csbsju.edu</th>
+    <th>********</th>
+  </tr>
+</table>
+
+<br><br>
+
+<!-- Add New-User Table -->
+<h4><center>Add New User</center></h4>
+<table width=47% align="center">
+  <tr>
+    <th>User ID</th>
+    <th><center>4</th>
+  </tr>
+  <tr>
+    <th>Username</th>
+    <th><input type="text" class="input-field" name="field1" value="" /></th>
+  </tr>
+  <tr>
+    <th>First Name</th>
+    <th><input type="text" class="input-field" name="field1" value="" /></th>
+  </tr>
+  <tr>
+    <th>Last Name</th>
+    <th><input type="text" class="input-field" name="field1" value="" /></th>
+  </tr>
+  <tr>
+    <th>Email Address</th>
+    <th><input type="text" class="input-field" name="field1" value="" /></th>
+  </tr>
+  <tr>
+    <th>Password</th>
+    <th><input type="text" class="input-field" name="field1" value="" /></th>
+  </tr>
+  <tr>
+    <th>Confirm Password</th>
+    <th><input type="text" class="input-field" name="field1" value="" /></th>
+  </tr>
+</table>
+<br>
+
+<!-- Buttons below Table -->
+<form><label><center>
+<input type="submit" value="Add User"/>
+<br><br>
+<input type="submit" value="Return to Admin Menu" />
+</label></form></div>
+
+<!-- Closing Tags -->
+</body></html>
