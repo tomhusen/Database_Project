@@ -4,7 +4,6 @@
     padding: 20px 12px 10px 20px;
     font: 13px Arial, Helvetica, sans-serif;
 }
-
 .form-style-2-heading{
     font-weight: bold;
     font-style: italic;
@@ -17,26 +16,8 @@
     display: block;
     margin: 0px 0px 15px 0px;
 }
-
-.form-style-2 label.listbutton{
-    display: left;
-    margin: 0px 0px 15px 0px;
-}
-
-.form-style-2 label.button{
-    display: inline-block;
-    margin: 0px 10px 15px 0px;
-	padding-left:20px;
-}
 .form-style-2 label > span{
-    width: 160px;
-    font-weight: bold;
-    float: left;
-    padding-top: 8px;
-    padding-right: 5px;
-}
-.form-style-2 label > span.wide{
-    width: 200px;
+    width: 100px;
     font-weight: bold;
     float: left;
     padding-top: 8px;
@@ -51,10 +32,6 @@
 }
 .form-style-2 input.input-field{
     width: 48%;
-    
-}
-.form-style-2 input.input-field-small{
-    width: 12.6%;
     
 }
 
