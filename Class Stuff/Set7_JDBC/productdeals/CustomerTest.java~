@@ -1,0 +1,218 @@
+package productdeals;
+
+import java.sql.*;
+import junit.framework.Assert;
+import org.junit.*;
+import oracle.jdbc.*;
+
+/**
+ * PS: THIS TEST CLASS ASSUMES A FRESH COPY OF THE DATABASE. RERUN the SQL script file 
+ * provided to recreate the database BEFORE running this test class
+ */
+public class CustomerTest {
+  Customer cus;
+  
+  @Before
+  public void init() throws Exception {
+    cus = new Customer();
+    cus.setCustomerNumber("124");
+    cus.setLast("Adams");
+  }
+  
+  /**
+   * Test of login method, of class Customer.
+   */
+  @Test
+  public void testLogin(){
+    System.out.println("login");
+    Assert.assertFalse(cus.isLoggedIn());
+    cus.setCustomerNumber("ooe");
+    Assert.assertFalse(cus.login());
+    Assert.assertFalse(cus.isLoggedIn());
+    cus.setCustomerNumber("124");
+    Assert.assertTrue(cus.login());
+    Assert.assertTrue(cus.isLoggedIn());
+  }
+  
+  /**
+   * Test of logout method, of class Customer.
+   */
+  @Test    
+  public void testLogout() {
+    System.out.println("logout");
+    Assert.assertFalse(cus.isLoggedIn());
+    try{
+      cus.logout();
+      Assert.fail("CAN'T LOGOUT IF USER IS NOT LOGGED IN");
+    }
+    catch(IllegalStateException ise){
+    }
+    cus.login();
+    Assert.assertTrue(cus.isLoggedIn());
+    cus.logout();
+    Assert.assertFalse(cus.isLoggedIn());
+  }
+  
+  /**
+   * Test of getCustomerInfo method, of class Customer.
+   */
+  @Test    
+  public void testGetCustomerInfo() throws Exception{
+    System.out.println("getCustomerInfo");
+    ResultSet rs;
+    try{
+      rs = cus.getCustomerInfo();
+      Assert.fail("CAN'T GET INFO IF USER IS NOT LOGGED IN");
+    }
+    catch(IllegalStateException ise){
+      
+    }
+    Assert.assertTrue(cus.login());
+    
+    rs = cus.getCustomerInfo();
+    if(rs.next()){
+      Assert.assertTrue(rs.getString("FIRST").equals("Sally"));
+      Assert.assertTrue(rs.getString("STREET").equals("481 Oak"));            
+      Assert.assertTrue(rs.getString("CITY").equals("Lansing"));
+      Assert.assertTrue(rs.getString("STATE").equals("MI"));
+      Assert.assertTrue(rs.getString("ZIP_CODE").equals("49224"));
+      Assert.assertTrue(rs.getDouble("BALANCE")==818.75);
+      Assert.assertTrue(rs.getDouble("CREDIT_LIMIT")==1000.00);
+      Assert.assertTrue(rs.getString("SLSREP_NUMBER").equals("03"));
+    }
+    else{
+      Assert.fail("INFO RESULT SET WAS EMPTY");
+    }
+  }   
+  
+  /**
+   * Test of editCustomerInfo method, of class Customer.
+   */
+  @Test
+  public void testEditCustomerInfo() throws Exception{
+    System.out.println("editCustomerInfo");
+    try{
+      cus.editCustomerInfo();
+      Assert.fail("CAN'T EDIT INFO IF USER IS NOT LOGGED IN");
+    }
+    catch(IllegalStateException ise){
+      
+    }
+    Assert.assertTrue(cus.login());
+    cus.setFirst("aaa");        
+    cus.setStreet("aaa");
+    cus.setCity("aaa");
+    cus.setState("aa");
+    cus.setZipCode("aaaaa");
+    cus.setBalance(1);
+    cus.setCreditLimit(1);
+    cus.setSlsRepNumber("aa");
+    cus.editCustomerInfo();
+    
+    ResultSet rs = cus.getCustomerInfo();
+    if(rs.next()){
+      Assert.assertTrue(rs.getString("CUSTOMER_NUMBER").equals("124"));
+      Assert.assertTrue(rs.getString("FIRST").equals("aaa"));
+      Assert.assertTrue(rs.getString("STREET").equals("aaa"));
+      Assert.assertTrue(rs.getString("CITY").equals("aaa"));
+      Assert.assertTrue(rs.getString("STATE").equals("aa"));
+      Assert.assertTrue(rs.getString("ZIP_CODE").equals("aaaaa"));
+      Assert.assertTrue(rs.getDouble("BALANCE")==818.75);
+      Assert.assertTrue(rs.getDouble("CREDIT_LIMIT")==1000.00);
+      Assert.assertTrue(rs.getString("SLSREP_NUMBER").equals("03"));
+      cus.setFirst("Salt");        
+      cus.setStreet("481 Oak");
+      cus.setCity("Lansing");
+      cus.setState("MI");
+      cus.setZipCode("49224");
+      cus.editCustomerInfo();
+    }
+    else{
+      Assert.fail("INFO RESULT SET WAS EMPTY");
+    }
+  }
+  
+  /**
+   * Test of getAllTransactions method, of class Customer.
+   */
+  @Test
+  public void testGetAllTransactions() throws Exception{
+    System.out.println("getAllTransactions");
+    try{
+      cus.getAllTransactions();
+      Assert.fail("CAN'T GET TRANS IF USER IS NOT LOGGED IN");
+    }
+    catch(IllegalStateException ise){
+      
+    }
+    Assert.assertTrue(cus.login());
+    ResultSet rs = cus.getAllTransactions();
+    if(rs.next()){
+      Assert.assertTrue(rs.getString("TRANS_NUMBER").equals("12489"));
+      if(rs.next()){
+        Assert.assertTrue(rs.getString("TRANS_NUMBER").equals("12500"));
+      }
+      else{
+        Assert.fail("CUSTOMER SHOULD HAVE TWO TRANSACTIONS --- missing PART 12500");
+      }
+    }
+    else{
+      Assert.fail("CUSTOMER SHOULD HAVE TWO TRANSACTION --- missing PART 12489");
+    }
+  }
+  
+  /**
+   * Test of getTransactionParts method, of class Customer.
+   */
+  @Test
+  public void testGetTransactionParts() throws Exception{
+    System.out.println("getTransactionParts");
+    try{
+      cus.getTransactionParts("?????");
+      Assert.fail("CAN'T GET TRANS_PARTS IF USER IS NOT LOGGED IN");
+    }
+    catch(IllegalStateException ise){
+      
+    }
+    cus.setLast("Nelson");
+    cus.setCustomerNumber("522");
+    Assert.assertTrue(cus.login());
+    ResultSet rs = cus.getTransactionParts("12498");
+    if(rs.next()){
+      Assert.assertTrue(rs.getString("PART_NUMBER").equals("AZ52"));
+      if(rs.next()){
+        Assert.assertTrue(rs.getString("PART_NUMBER").equals("BA74"));
+      }
+      else{
+        Assert.fail("CUSTOMER TRANS SHOULD HAVE TWO PARTS --- missing PART BA74");
+      }
+    }
+    else{
+      Assert.fail("CUSTOMER TRANS SHOULD HAVE TWO PARTS --- missing PART AZ52");
+    }
+    
+    rs = cus.getTransactionParts("12411");
+    Assert.assertTrue(!rs.next());
+  }
+  
+  /**
+   * Test of getTransactionTotalValue method, of class Customer.
+   */
+  @Test
+  public void testGetTransactionTotalValue() throws Exception{
+    System.out.println("getTransactionTotalValue");
+    try{
+      cus.getTransactionTotalValue("?????");
+      Assert.fail("CAN'T GET TRANS VALUE IF USER IS NOT LOGGED IN");
+    }
+    catch(IllegalStateException ise){
+      
+    }
+    cus.setLast("Nelson");
+    cus.setCustomerNumber("522");
+    Assert.assertTrue(cus.login());
+    Assert.assertTrue(cus.getTransactionTotalValue("12498")==125.7);
+    Assert.assertTrue(cus.getTransactionTotalValue("12500")==149.99);
+    Assert.assertTrue(cus.getTransactionTotalValue("11122")==0.0);
+  }
+}

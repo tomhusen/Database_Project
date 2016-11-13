@@ -1,0 +1,17 @@
+1-Use the provided SQL script file recreate_productdeals.sql to create a NEW (slightly different) version of the ProductDeals database on Oracle and insert data into all tables. The script also creates an SQL function.
+
+
+2-Use DrJava for this exercise (IF NOT DONE LAST TIME)
+ - Go to "Edit">"Preferences" and select "Resource Locations" on the left
+ - Press the "Add" button under "Extra Classpath" and browse to add the following:/usr/people/classes/Java/ojdbc7.jar
+
+
+3-You are asked to complete file Customer.java inside package productdeals. When done, test your class using the provided test class
+
+
+4-Please refer to JDBC.java (under /usr/people/classes/CS331/handouts/CodeSamples/JDBC) for sample JDBC code
+
+
+5- GRADING WILL BE BASED ON THE NUMBER OF TEST CASES THAT PASS
+
+
