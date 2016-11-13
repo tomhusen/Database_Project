@@ -357,13 +357,17 @@ public class Customer implements Serializable {
    * transaction whose number is specified as a parameter.
    * @throws IllegalStateException if then method is called when loggedIn = false
    */
-  public ResultSet getTransactionParts(String transNumber) throws IllegalStateException{
+  public ResultSet getTransactionParts(String transNumber) throws IllegalStateException, SQLException{
+    // Checks if user is currently logged in
+    if(isLoggedIn() == false) throw new IllegalStateException();
+    // Open Connection, create Statment and Query
     Connection con = openDBConnection();
-    
-    /* Closes DB Connection */
-    try{ con.close(); }  
-    catch(SQLException E){}
-    return null;
+    Statement stmt = con.createStatement();
+    String queryString = "Select * From PRODUCTDEALS_TRANSPART tp";
+    queryString += "Where tp.TRANS_NUMBER='" + transNumber + "'";
+    // Executes the query, then returns the ResultSet
+    ResultSet result = stmt.executeQuery(queryString);
+    return result;
   }
   
   /**

@@ -58,9 +58,9 @@ CREATE TABLE GABES_ITEM(
 DROP TABLE GABES_FEEDBACK CASCADE CONSTRAINTS;
 CREATE TABLE GABES_FEEDBACK(
   ITEM_ID CHAR(10) PRIMARY KEY,
-  ITEM_QUALITY CHAR(1),                       -- Will be value 1-10
+  ITEM_QUALITY CHAR(2),                       -- Will be value 1-10
   DELIVERY CHAR(2),                           -- Will be value 1-10
-  OVERALL_RATING CHAR(1),                     -- Will be value 1-10
+  OVERALL_RATING CHAR(2),                     -- Will be value 1-10
   COMMENTS VARCHAR(100)
   );
 
@@ -155,5 +155,5 @@ Insert Into GABES_FEEDBACK VALUES
   (0000000009, 10, 10, 10, '');
 Insert Into GABES_FEEDBACK VALUES
   (0000000006, 8, 3, 7, 'Pretty good movie - slow to deliver though');
-Insert Into GABES_FEEDBACK VALUES
-  (0000000007, 1, 8, 1, 'Super quick delivery - but the box was in flames');
+--Insert Into GABES_FEEDBACK VALUES
+--  (0000000007, 1, 8, 1, 'Super quick delivery - but the box was in flames');
