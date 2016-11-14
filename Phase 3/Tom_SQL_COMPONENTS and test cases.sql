@@ -115,6 +115,7 @@ Select * From GABES_VIEWUSERS Where USERNAME='lJames';
 -- Currently have to manually put it in which is the '000009'
 
 
+
 CREATE OR REPLACE PROCEDURE GABES_ADD_USER(new_username VARCHAR, new_email VARCHAR, new_pass VARCHAR,
                 new_phone VARCHAR, new_first VARCHAR, new_last VARCHAR, new_admin CHAR, new_admin_u VARCHAR, new_sell CHAR, new_buy CHAR) AS
   BEGIN
@@ -124,6 +125,7 @@ CREATE OR REPLACE PROCEDURE GABES_ADD_USER(new_username VARCHAR, new_email VARCH
   
 -- Tests the addition of a new user
 EXEC GABES_ADD_USER('rclawrence', 'rclawrence@csbsju.edu', 'password', '1234567891', 'Bobby', 'Lawrence', 0, 'tehusen', 1, 1);
+
 
 -- ************************************************************************
 -- ************************************************************************
