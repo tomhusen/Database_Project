@@ -9,6 +9,9 @@
 
 
 
+
+
+
 -- Create table for the Users - has all attributes
 DROP TABLE GABES_USER CASCADE CONSTRAINTS;
 CREATE TABLE GABES_USER(
@@ -23,16 +26,8 @@ CREATE TABLE GABES_USER(
   A_USERNAME VARCHAR(15),
   IS_SELLER CHAR(1),
   IS_BUYER CHAR(1) --,
-
- -- FOREIGN KEY (A_USERNAME) REFERENCES GABES_ADMIN(A_USERNAME)
   );
 
----- Create table for the Admins - has all attributes
---DROP TABLE GABES_ADMIN CASCADE CONSTRAINTS;
---CREATE TABLE GABES_ADMIN(
---  A_USERNAME VARCHAR(15) PRIMARY KEY,
---  PASS VARCHAR(15) NOT NULL
---  );
 
 
 -- Create table for the Items - has all attributes (Check requirements for unique, etc.
@@ -47,9 +42,10 @@ CREATE TABLE GABES_ITEM(
   ITEM_NAME VARCHAR(30) NOT NULL,
   CURRENT_BID DECIMAL(7, 2),
   START_PRICE DECIMAL(7, 2) NOT NULL,
-  START_DATE DATE NOT NULL,
-  END_DATE DATE NOT NULL,
+  START_DATE TIMESTAMP NOT NULL,
+  END_DATE TIMESTAMP NOT NULL,
   USER_ID CHAR(6) NOT NULL,
+  WINNER_ID CHAR(6),
 
   FOREIGN KEY (USER_ID) REFERENCES GABES_USER(USER_ID)
   );
@@ -62,18 +58,20 @@ CREATE TABLE GABES_FEEDBACK(
   DELIVERY CHAR(2),                           -- Will be value 1-10
   OVERALL_RATING CHAR(2),                     -- Will be value 1-10
   COMMENTS VARCHAR(100)
-  );
+    );
 
 -- Create table for the Bids
 DROP TABLE GABES_BIDS CASCADE CONSTRAINTS;
 CREATE TABLE GABES_BIDS(
-  ITEM_ID CHAR(10) PRIMARY KEY,
-  USER_ID CHAR(6),
-  BIDDING_TIME DECIMAL(15,15),                -- Probably need to change this data type
+  ITEM_ID CHAR(10),
+  BIDDER_ID CHAR(6),
+  BIDDING_TIME TIMESTAMP(0),               
   MAX_BID DECIMAL(7, 2),
+  
+  CONSTRAINT PK_BIDS PRIMARY KEY(ITEM_ID, BIDDER_ID, BIDDING_TIME),
 
   FOREIGN KEY (ITEM_ID) REFERENCES GABES_ITEM(ITEM_ID),
-  FOREIGN KEY (USER_ID) REFERENCES GABES_USER(USER_ID)
+  FOREIGN KEY (BIDDER_ID) REFERENCES GABES_USER(USER_ID)
   );
 
 -- ************************************************************
@@ -102,45 +100,36 @@ Insert Into GABES_USER VALUES
 
 
 
----- Insertions for the GABES_ADMIN table
---Insert Into GABES_ADMIN VALUES
---  ('tehusen', 'p@$$word');
---Insert Into GABES_ADMIN VALUES
---  ('gkboyer', 'p@$$word1');
---Insert Into GABES_ADMIN VALUES
---  ('kaolson', 'p@$$word2');
-
-
 
 -- Insertions for the GABES_ITEM table
 -- Item(Item ID, Category, Sold?, Selling Price (Final Bid), Description, Commission, Name, Current Bid, Start Price, Start Date, End Date, Seller ID)
 
 Insert Into GABES_ITEM VALUES
-  (0000000001, 'Books', 0, NULL, 'Book for Computer Science class', NULL, 'Database Systems', NULL, 15.00, to_date('2016-12-10','YYYY-MM-DD'), to_date('2016-12-20','YYYY-MM-DD'), 00001);
+  (0000000001, 'Books', 0, NULL, 'Book for Computer Science class', NULL, 'Database Systems', NULL, 15.00, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00001, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (0000000002, 'Cooking', 0, NULL, 'Frying pan for cooking', NULL, 'Non-Stick Skillet', NULL, 17.99, to_date('2016-12-08','YYYY-MM-DD'), to_date('2016-12-10','YYYY-MM-DD'), 00001);
+  (0000000002, 'Cooking', 0, NULL, 'Frying pan for cooking', NULL, 'Non-Stick Skillet', NULL, 17.99,  CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00001, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (0000000003, 'Movies', 0, NULL, '2016 Disney-Pixar Film', NULL, 'Finding Dory', NULL, 19.99, to_date('2016-12-07','YYYY-MM-DD'), to_date('2016-12-24','YYYY-MM-DD'), 00001);
+  (0000000003, 'Movies', 0, NULL, '2016 Disney-Pixar Film', NULL, 'Finding Dory', NULL, 19.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00001, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (0000000004, 'Books', 0, NULL, 'NY Times Bestseller!', NULL, 'The Da Vinci Code', NULL, 18.00, to_date('2016-12-15','YYYY-MM-DD'), to_date('2016-12-20','YYYY-MM-DD'), 00002);
+  (0000000004, 'Books', 0, NULL, 'NY Times Bestseller!', NULL, 'The Da Vinci Code', NULL, 18.00, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00002, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (0000000005, 'Books', 0, NULL, 'Biography by Walter Issacson', NULL, 'Steve Jobs', NULL, 21.99, to_date('2016-12-15','YYYY-MM-DD'), to_date('2016-12-19','YYYY-MM-DD'), 00006);
+  (0000000005, 'Books', 0, NULL, 'Biography by Walter Issacson', NULL, 'Steve Jobs', NULL, 21.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00006, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (0000000006, 'Movies', 0, NULL, 'The second Avengers Movie', NULL, 'Avengers: Age of Ultron', NULL, 19.99, to_date('2016-12-07','YYYY-MM-DD'), to_date('2016-12-24','YYYY-MM-DD'), 00004);
+  (0000000006, 'Movies', 0, NULL, 'The second Avengers Movie', NULL, 'Avengers: Age of Ultron', NULL, 19.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00004, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (0000000007, 'Electronics', 0, NULL, 'Also doubles as a fire starter', NULL, 'Samsung Note 7', NULL, 199.99, to_date('2016-12-10','YYYY-MM-DD'), to_date('2016-12-15','YYYY-MM-DD'), 00007);
+  (0000000007, 'Electronics', 0, NULL, 'Also doubles as a fire starter', NULL, 'Samsung Note 7', NULL, 199.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00007, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (0000000008, 'Merchandise', 0, NULL, 'Authentic Steph Curry Jersey', NULL, 'Curry #30 Jersey', NULL, 64.95, to_date('2016-12-08','YYYY-MM-DD'), to_date('2016-12-27','YYYY-MM-DD'), 00003);
+  (0000000008, 'Merchandise', 0, NULL, 'Authentic Steph Curry Jersey', NULL, 'Curry #30 Jersey', NULL, 64.95, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00003, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (0000000009, 'Clothing', 0, NULL, 'The North Face ultra-warm winter jacket', NULL, 'North Face Jacket', NULL, 149.99, to_date('2016-12-07','YYYY-MM-DD'), to_date('2016-12-22','YYYY-MM-DD'), 00004);
+  (0000000009, 'Clothing', 0, NULL, 'The North Face ultra-warm winter jacket', NULL, 'North Face Jacket', NULL, 149.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00004, NULL);
 
 
 -- Insertions for the GABES_FEEDBACK table
@@ -155,5 +144,12 @@ Insert Into GABES_FEEDBACK VALUES
   (0000000009, 10, 10, 10, '');
 Insert Into GABES_FEEDBACK VALUES
   (0000000006, 8, 3, 7, 'Pretty good movie - slow to deliver though');
---Insert Into GABES_FEEDBACK VALUES
---  (0000000007, 1, 8, 1, 'Super quick delivery - but the box was in flames');
+
+
+-- Insertions for the GABES_BIDS table
+-- 
+Insert Into GABES_BIDS VALUES
+  (0000000003, 000001, CURRENT_TIMESTAMP, 50.00);
+Insert Into GABES_BIDS VALUES
+  (0000000005, 000004, CURRENT_TIMESTAMP, 60.00);
+
