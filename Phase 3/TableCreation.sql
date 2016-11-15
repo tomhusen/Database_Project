@@ -1,32 +1,4 @@
--- *** GENERAL NOTES ***
--- For IS_ATTRIBUTE attributes (Seller, Buyer, Admin, etc)  and any other boolean value
---    0 will denote false, and 1 will denote true.  These are CHAR(1) datatypes
--- Dropped the Admin table for now - seems a lot simpler to have a boolean value
---    for is_admin rather than a whole table just to have a single attribute
--- *********************************************************
--- *********************************************************
--- *********************************************************
-
--- *********************************************************
--- DROP THEN CREATE SEQUENCES FOR USER IDS AND ITEM IDS
-DROP SEQUENCE new_user_seq;
-CREATE SEQUENCE new_user_seq
-  MAXVALUE 99999
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
-  
-DROP SEQUENCE new_item_seq;
-CREATE SEQUENCE new_item_seq
-  MAXVALUE 9999999999
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
-  
-
-
+-- *****************************************************************************
 
 -- Create table for the Users - has all attributes
 DROP TABLE GABES_USER CASCADE CONSTRAINTS;
@@ -34,7 +6,7 @@ CREATE TABLE GABES_USER(
   USER_ID CHAR(6) PRIMARY KEY,
   USERNAME VARCHAR(15) NOT NULL UNIQUE,
   EMAIL VARCHAR(30) NOT NULL UNIQUE,
-  PASS VARCHAR(15) NOT NULL,                      -- PASSWORD is keyword so we'll use PASS
+  PASS VARCHAR(15) NOT NULL,                      
   PHONE VARCHAR(10),
   FIRST_N VARCHAR(12),
   LAST_N VARCHAR(12),
@@ -51,7 +23,7 @@ DROP TABLE GABES_ITEM CASCADE CONSTRAINTS;
 CREATE TABLE GABES_ITEM(
   ITEM_ID CHAR(10) PRIMARY KEY,
   ITEM_CATEGORY VARCHAR(15),
-  STATUS CHAR(1) NOT NULL,                     -- Will be 0=SOLD or 1=NOT_SOLD
+  STATUS CHAR(1) NOT NULL,                  -- 0=Not Sold and 1=Sold                     
   SELLING_PRICE DECIMAL(7, 2),
   DESCRIPTION VARCHAR(100),
   COMMISSION_FEE DECIMAL(7, 2),
@@ -70,9 +42,9 @@ CREATE TABLE GABES_ITEM(
 DROP TABLE GABES_FEEDBACK CASCADE CONSTRAINTS;
 CREATE TABLE GABES_FEEDBACK(
   ITEM_ID CHAR(10) PRIMARY KEY,
-  ITEM_QUALITY CHAR(2),                       -- Will be value 1-10
-  DELIVERY CHAR(2),                           -- Will be value 1-10
-  OVERALL_RATING CHAR(2),                     -- Will be value 1-10
+  ITEM_QUALITY CHAR(2),                       
+  DELIVERY CHAR(2),                           
+  OVERALL_RATING CHAR(2),                     
   COMMENTS VARCHAR(100)
     );
 

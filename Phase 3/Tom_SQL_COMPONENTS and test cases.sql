@@ -49,17 +49,17 @@ CREATE OR REPLACE FUNCTION GABES_USERLOGIN(param_user String, param_pass String)
     Return temp;
   END;
   
--- RETURNS 1
-Select COUNT(*) From GABES_USER Where USERNAME='irahal' and PASS='puppies123';
--- RETURNS 0
-Select COUNT(*) From GABES_USER Where USERNAME='irahal' and PASS='wrong';
-
--- Correct Credentials - RETURNS 1
-Select GABES_USERLOGIN('irahal', 'puppies123') from DUAL;
--- Incorret Password - RETURNS 0
-Select GABES_USERLOGIN('irahal', 'wrong') from DUAL;
--- Not an Admin - but otherwise correct credentials - RETURNS 0
-Select GABES_USERLOGIN('tehusen', 'p@$$word') from DUAL;
+---- RETURNS 1
+--Select COUNT(*) From GABES_USER Where USERNAME='irahal' and PASS='puppies123';
+---- RETURNS 0
+--Select COUNT(*) From GABES_USER Where USERNAME='irahal' and PASS='wrong';
+--
+---- Correct Credentials - RETURNS 1
+--Select GABES_USERLOGIN('irahal', 'puppies123') from DUAL;
+---- Incorret Password - RETURNS 0
+--Select GABES_USERLOGIN('irahal', 'wrong') from DUAL;
+---- Not an Admin - but otherwise correct credentials - RETURNS 0
+--Select GABES_USERLOGIN('tehusen', 'p@$$word') from DUAL;
 
 
 -- ************************************************************************
@@ -176,7 +176,141 @@ CREATE SEQUENCE new_item_seq
   
   
   
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
   
-  
+  -- Search
+--
+-- Allows a user to search through all of the items in the database based on
+-- item ID, name, etc. and will display a table with the results
+
+-- We need to put the Column name into all UPPER CASE so that when querying we ignore casing
+
+-- Creates a View of All Items
+CREATE OR REPLACE VIEW GABES_SEARCH AS
+  Select ITEM_ID as Item_ID, ITEM_NAME as Name, ITEM_CATEGORY as Category, 
+    START_DATE as Auction_Start, END_DATE as Auction_End, 
+    CURRENT_BID as Current_Bid, USER_ID as Sellers_ID, START_PRICE as Begin_Price
+  From GABES_ITEM
+  Order By ITEM_ID;
+
+-- *****************************************************************************
+-- *****************************************************************************
+-- *****************************************************************************
+
+-- ******************************* TEST CASES **********************************
+
+-- Search by ITEM_ID (Valid) - Returns info about item with ITEM_ID = 1
+Select * From GABES_SEARCH Where ITEM_ID = 1;
+
+-- Search by ITEM_ID (Invalid) - Returns empty table
+Select * From GABES_SEARCH Where ITEM_ID = 0;
+
+-- *****************************************************************************
+
+-- Search by ITEM_CATEGORY (Valid) - Returns info about item with CATEGORY like Books
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BOOKS%';
+
+-- Search by ITEM_CATEGORY (Invalid) - Returns empty table
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BEER%';
+
+-- *****************************************************************************
+
+-- Search by ITEM_NAME (Valid) - Returns info about item with ITEM_NAME like Jersey
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%JERSEY%';
+
+-- Search by ITEM_NAME (Invalid) - Returns empty table
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%LEBRON%';
+
+-- *****************************************************************************
+
+-- Search by CURRENT_BID (Valid) - Returns info about item with CURRENT_BID less than $20
+Select * From GABES_SEARCH Where CURRENT_BID <= 20 OR (BEGIN_PRICE <= 20.00 and CURRENT_BID IS NULL);
+
+-- Search by CURRENT_BID (Invalid) - Returns empty table since nothing is priced less than $10
+Select * From GABES_SEARCH Where CURRENT_BID <= 10 OR (BEGIN_PRICE <= 10.00 and CURRENT_BID IS NULL);
+
+-- *****************************************************************************
+
+-- Search by CATEGORY and NAME (Valid) - Returns info about item with CATEGORY like Books and NAME like Da Vinci
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BOOKS%'
+INTERSECT
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%VINCI%';
+
+-- Search by CATEGORY and NAME (Invalid) - Returns empty table since no items in the CATEGORY Books are named 'Kennedy'
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BOOKS%'
+INTERSECT
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%KENNEDY%';
+
+-- *****************************************************************************
+
+-- Search by CATEGORY and NAME (Valid) - Returns info about item with CATEGORY like Books and NAME like Da Vinci
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BOOKS%'
+INTERSECT
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%VINCI%';
+
+-- Search by CATEGORY and NAME (Invalid) - Returns empty table since no items in the CATEGORY Books are named 'Kennedy'
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BOOKS%'
+INTERSECT
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%KENNEDY%';
+
+-- *****************************************************************************
+
+-- Search by CATEGORY and PRICE (Valid) - Returns info about item with CATEGORY like Books and Priced below $18
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BOOKS%'
+INTERSECT
+Select * From GABES_SEARCH Where CURRENT_BID <= 18 OR (BEGIN_PRICE <= 18.00 and CURRENT_BID IS NULL);
+
+-- Search by CATEGORY and PRICE (Invalid) - Returns empty table since no items in the CATEGORY Books are Priced below $10
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BOOKS%'
+INTERSECT
+Select * From GABES_SEARCH Where CURRENT_BID <= 10 OR (BEGIN_PRICE <= 10.00 and CURRENT_BID IS NULL);
+
+-- *****************************************************************************
+
+-- Search by NAME and PRICE (Valid) - Returns info about item with NAME like Jacket and Priced below $200
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%JACKET%'
+INTERSECT
+Select * From GABES_SEARCH Where CURRENT_BID <= 200 OR (BEGIN_PRICE <= 200.00 and CURRENT_BID IS NULL);
+
+-- Search by NAME and PRICE (Invalid) - Returns empty table since no items with a NAME like JACKET are Priced below $100
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%JACKET%'
+INTERSECT
+Select * From GABES_SEARCH Where CURRENT_BID <= 100 OR (BEGIN_PRICE <= 100.00 and CURRENT_BID IS NULL);3
+
+-- *****************************************************************************
+
+-- Search by NAME, CATEGORY, PRICE (Valid) - Returns info about item with NAME like VINCI, CATEGORY like BOOK, and Priced below $20
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%VINCI%'
+INTERSECT
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%BOOKS%'
+INTERSECT
+Select * From GABES_SEARCH Where CURRENT_BID <= 20 OR (BEGIN_PRICE <= 20.00 and CURRENT_BID IS NULL);
+
+-- Search by CATEGORY and PRICE (Invalid) - Returns empty table since no items match these requirements
+Select * From GABES_SEARCH Where upper(NAME) LIKE '%VINCI%'
+INTERSECT
+Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%COOKING%'
+INTERSECT
+Select * From GABES_SEARCH Where CURRENT_BID <= 20 OR (BEGIN_PRICE <= 20.00 and CURRENT_BID IS NULL);
+
+
+
   
   
