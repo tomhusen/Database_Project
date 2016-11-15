@@ -310,7 +310,90 @@ Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%COOKING%'
 INTERSECT
 Select * From GABES_SEARCH Where CURRENT_BID <= 20 OR (BEGIN_PRICE <= 20.00 and CURRENT_BID IS NULL);
 
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+-- ************************************************************************
+  
+  -- Bids
 
+-- Inserts a new 'bid' into the bids table. The primary key is a combination 
+-- of the Item_ID, Bidder_ID, and Timestamp of when the bid was placed
+  CREATE OR REPLACE PROCEDURE GABES_NEW_BID(new_itemID CHAR, new_bidderID CHAR, new_maxLimit DECIMAL) AS
+  BEGIN
+    INSERT INTO GABES_BIDS VALUES (new_itemID, new_bidderID, CURRENT_TIMESTAMP, new_maxLimit);
+  END;
+  
+-- Tests the addition of a new bid
+EXEC GABES_NEW_BID(9, 1, 180);
 
+--*****************************************************************************
+--*****************************************************************************
+--*****************************************************************************
+
+-- If the current time is past the selling time, then flip the status flag
+
+  CREATE OR REPLACE PROCEDURE GABES_CHECK_TIME AS
+  BEGIN
+    Update GABES_ITEM
+    Set STATUS = 1, SELLING_PRICE = CURRENT_BID, COMMISSION_FEE = (.95*CURRENT_BID)
+    Where CURRENT_TIMESTAMP > END_DATE;
+  END;
+
+EXEC GABES_CHECK_TIME;
+
+EXEC GABES_NEW_BID(9, 1, 180);
+-- ************************************************************************
+
+  
+-- Trigger to run when the status is flipped to 1 - i.e. Auction ended
+CREATE OR REPLACE TRIGGER GABES_AUCTION_ENDED
+  BEFORE INSERT ON GABES_BIDS
+  FOR EACH ROW
+  BEGIN
+    GABES_CHECK_TIME;
+  END;
+    
+    
+CREATE OR REPLACE TRIGGER GABES_BID_TRIGGER
+  AFTER INSERT ON GABES_BIDS
+  FOR EACH ROW
+  BEGIN
+    UPDATE GABES_ITEM
+    SET CURRENT_BID = :NEW.MAX_BID
+    WHERE GABES_ITEM.ITEM_ID =:NEW.ITEM_ID;
+  End;
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   

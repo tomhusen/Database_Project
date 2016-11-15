@@ -181,7 +181,36 @@ Select * From GABES_SEARCH Where upper(CATEGORY) LIKE '%COOKING%'
 INTERSECT
 Select * From GABES_SEARCH Where CURRENT_BID <= 20 OR (BEGIN_PRICE <= 20.00 and CURRENT_BID IS NULL);
 
+-- ****************************************************************************
+-- Tests: Procedure GABES_NEW_BID
+-- Return: This procedure adds a new bid to the database. It sends the item ID,
+--         the bidder ID, and the Max Bid. The procedure logs the current time
+--         and adds this new record to the database
+  
+-- Outputs success on successful execution
+EXEC GABES_NEW_BID(9, 1, 180);
 
+-- ****************************************************************************
+-- Tests: Procedure GABES_CHECK_TIME
+-- Return: This procedure checks to see if the auction has ended. If it has it
+--         sets the final selling price and the commission fee
+  
+-- In terms of testing, whenever a new bid is submitted, there's a trigger
+-- that will execute this procedure and check if that auction has already ended.
+-- If it has the newly submitted bid is invalid and the previous high bid wins.
+-- These can be checked with the GABES_NEW_BID function
+
+-- ****************************************************************************
+-- Tests: Trigger GABES_AUCTION_ENDED
+-- Return: This trigger is our compromise once we couldn't get our scheduler to 
+--         work as we intended. What will happen is BEFORE an insertion to the 
+--         BIDS table, it will execute a procedure that will check if the auction
+--         has ended yet. Based on the results it will act accordingly. 
+-- NOTE: The contents of the procedure that it calls are located above - named
+--          GABES_CHECK_TIME
+  
+-- In terms of testing, again, it will be tested upon a new insertion to the 
+-- BIDS table
 
 -- ****************************************************************************
 -- ****************************************************************************
@@ -345,6 +374,87 @@ EXECUTE UPDATE_USER_PROFILE_EMAIL(1,'test1@CSBSJU.EDU');
 -- add a duplicate record already existing in the databse
 -- updating it to a null value does nothing to the value and returns a success messgae.
   EXECUTE UPDATE_USER_PROFILE_USERNAME(1,'tomRoxs');
+  
+  
+-- ****************************************************************************
+-- ****************************************************************************
+-- ****************************************************************************
+-- ****************************************************************************
+-- GRANTS TEST CASES
+-- ****************************************************************************
+-- ****************************************************************************
+-- ****************************************************************************
+-- ****************************************************************************
+-- ****************************************************************************
+  
+
+-- Tests: View ADMIN_COMMISSION_REPORT
+-- Return: This view creates a table that keeps track of the commissions for 
+--         every sale made on the site. You can specify one user and look at 
+--         only their commissions or look at all commissions.
+  
+-- Gets all commission reports for all users
+Select * From ADMIN_COMMISSION_REPORT;
+-- Gets commission reports for user with USERNAME = 'gkboyer'
+Select * From ADMIN_COMMISSION_REPORT Where USERNAME = 'gkboyer';
+
+-- ****************************************************************************
+-- Tests: View SALE_SUMMARY_REPORT
+-- Return: This view creates a table that keeps track of the sales made on the 
+--         site. You could specify a Category to filter by and get records for
+--         sales made of items with that category
+
+-- Gets Summary of all sales that occur on the site
+Select * FROM Sale_Summary_Report;
+-- Gets Summary of all sales for items with a 'Books' category
+Select * FROM Sale_Summary_Report Where ITEM_CATEGORY LIKE '%Books';
+  
+-- ****************************************************************************
+-- Tests: View BID_STATUS
+-- Return: This view creates a table that will give item info about any items 
+--         that have been won.  It allows you to search by user so you could
+--         see the purchase history for a specific user
+
+-- Get all items that have been bid on
+Select * FROM Bid_Status;
+-- Gets the status of items bid on by the user with USERNAME=lJames
+Select * FROM Bid_Status Where USERNAME = 'lJames';
+
+-- ****************************************************************************
+-- Tests: View USERS_RATINGS
+-- Return: This view creates a table that keeps track of the ratings made on
+--         the site. You can specify a USER_ID and only get records that match 
+--         that user ID.
+
+-- Gets the info for any feedback for the user with USER_ID = 4
+Select * From USERS_RATING Where USER_ID = 4;
+
+-- ****************************************************************************
+-- Tests: Trigger GABES_BID_TRIGGER
+-- Return: This trigger will execute on a new addition to the bids table. Updating
+--         the current bid in the ITEMS table accordingly with the new info
+
+-- In terms of testing, it will be checked upon a new additon to the BIDS table
+-- Below is a function that could be ran to test this functionality
+EXEC GABES_NEW_BID(9, 1, 180);
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
