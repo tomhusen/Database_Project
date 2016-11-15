@@ -118,7 +118,7 @@ Insert Into GABES_ITEM VALUES
   (new_item_seq.NEXTVAL, 'Cooking', 1, 25.00, 'Frying pan for cooking', 3.00, 'Non-Stick Skillet', 25.00, 17.99,  CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00002, 00007);
 
 Insert Into GABES_ITEM VALUES
-  (new_item_seq.NEXTVAL, 'Movies', 0, NULL, '2016 Disney-Pixar Film', NULL, 'Finding Dory', NULL, 19.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00001, NULL);
+  (new_item_seq.NEXTVAL, 'Movies', 0, NULL, '2016 Disney-Pixar Film', NULL, 'Finding Dory', NULL, 19.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-11-14 22:05:00', 'YYYY-MM-DD HH24:MI:SS'), 00001, NULL);
 
 Insert Into GABES_ITEM VALUES
   (new_item_seq.NEXTVAL, 'Books', 0, NULL, 'NY Times Bestseller!', NULL, 'The Da Vinci Code', NULL, 18.00, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00002, NULL);
