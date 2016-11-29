@@ -1,0 +1,442 @@
+package productdeals;
+
+import java.util.*;
+import java.lang.*;
+import java.io.*;
+//Load JDBC API functions
+import java.sql.*;
+import oracle.jdbc.*;
+
+/**
+ * PS: Use the SQL script file provided in this folder to create a NEW (slightly different) 
+ * version of the ProductDeals database on Oracle and insert data into all tables. The 
+ * script also creates an SQL function.
+ */
+public class Customer implements Serializable {
+  /**
+   * The following fields correspond to the fields in Table ProductDeals_CUSTOMER in your
+   * PRODUCTDEALS Oracle database
+   */
+  private String customerNumber;
+  private String last;
+  private String first;
+  private String street;
+  private String city;
+  private String state;
+  private String zipCode;
+  private double balance;
+  private double creditLimit;
+  private String slsRepNumber;
+  /**
+   * The following stores whether or not the customer has successfully logged
+   * to the System
+   */    
+  private boolean loggedIn = false;
+  
+  /**
+   * A getter for class field customerNumber
+   * @return the customerNumber
+   */
+  public String getCustomerNumber() {
+    return customerNumber;
+  }
+  
+  /**
+   * A setter for class field customerNumber
+   * @param customerNumber the customerNumber to set
+   */
+  public void setCustomerNumber(String customerNumber) {
+    this.customerNumber = customerNumber;
+  }
+  
+  /**
+   * A getter for class field last
+   * @return the last
+   */
+  public String getLast() {
+    return last;
+  }
+  
+  /**
+   * A setter for class field last
+   * @param last the last to set
+   */
+  public void setLast(String last) {
+    this.last = last;
+  }
+  
+  /**
+   * A getter for class field first
+   * @return the first
+   */
+  public String getFirst() {
+    return first;
+  }
+  
+  /**
+   * A setter for class field first
+   * @param first the first to set
+   */
+  public void setFirst(String first) {
+    this.first = first;
+  }
+  
+  /**
+   * A getter for class field street
+   * @return the street
+   */
+  public String getStreet() {
+    return street;
+  }
+  
+  /**
+   * A setter for class field street
+   * @param street the street to set
+   */
+  public void setStreet(String street) {
+    this.street = street;
+  }
+  
+  /**
+   * A getter for class field city
+   * @return the city
+   */
+  public String getCity() {
+    return city;
+  }
+  
+  /**
+   * A setter for class field city
+   * @param city the city to set
+   */
+  public void setCity(String city) {
+    this.city = city;
+  }
+  
+  /**
+   * A getter for class field state
+   * @return the state
+   */
+  public String getState() {
+    return state;
+  }
+  
+  /**
+   * A setter for class field state
+   * @param state the state to set
+   */
+  public void setState(String state) {
+    this.state = state;
+  }
+  
+  /**
+   * A getter for class field zipCode
+   * @return the zipCode
+   */
+  public String getZipCode() {
+    return zipCode;
+  }
+  
+  /**
+   * A setter for class field zipCode
+   * @param zipCode the zipCode to set
+   */
+  public void setZipCode(String zipCode) {
+    this.zipCode = zipCode;
+  }
+  
+  /**
+   * A getter for class field balance
+   * @return the balance
+   */
+  public double getBalance() {
+    return balance;
+  }
+  
+  /**
+   * A setter for class field balance
+   * @param balance the balance to set
+   */
+  public void setBalance(double balance) {
+    this.balance = balance;
+  }
+  
+  /**
+   * A getter for class field creditLimit
+   * @return the creditLimit
+   */
+  public double getCreditLimit() {
+    return creditLimit;
+  }
+  
+  /**
+   * A setter for class field creditLimit
+   * @param creditLimit the creditLimit to set
+   */
+  public void setCreditLimit(double creditLimit) {
+    this.creditLimit = creditLimit;
+  }
+  
+  /**
+   * A getter for class field slsRepNumber
+   * @return the slsRepNumber
+   */
+  public String getSlsRepNumber() {
+    return slsRepNumber;
+  }
+  
+  /**
+   * A setter for class field slsRepNumber 
+   * @param slsRepNumber the slsRepNumber to set
+   */
+  public void setSlsRepNumber(String slsRepNumber) {
+    this.slsRepNumber = slsRepNumber;
+  }
+  
+  /**
+   * A default constructor ... no need for other constructors
+   */
+  public Customer() {
+  }
+  
+  /**
+   ***************************************COMPLETE ME***************************************
+   *********************USE YOUR ORACLE USERNAME AND PASSWORD instead of XXXX***************
+   * This method and creates and returns a Connection object to the database. 
+   * All other methods that need database access should call this method.
+   * @return a Connection object to Oracle
+   */
+  public Connection openDBConnection() {
+    try {
+      // Load driver and link to driver manager
+      Class.forName("oracle.jdbc.OracleDriver");
+      // Create a connection to the specified database
+      Connection myConnection = DriverManager.getConnection("jdbc:oracle:thin:@//cscioraclesrv.ad.csbsju.edu:1521/" + "csci.cscioraclesrv.ad.csbsju.edu","thusen", "900207243");
+      return myConnection;
+    } catch (Exception E) {
+      E.printStackTrace();
+    }
+    return null;
+  }
+  
+  /**
+   * A getter for class field loggedIn
+   * @return whether the Customer is logged in or not
+   */
+  public Boolean isLoggedIn() {
+    return this.loggedIn;
+  }
+  
+  /**
+   ***************************************COMPLETE ME***************************************
+   * When called, this method uses a Statement object to query table ProductDeals_CUSTOMER 
+   * for the customer whose last name and customer number are stored in class instance
+   * fields last and customerNumber, respectively.
+   * If a match is found, the method sets loggedIn class field to true and 
+   * returns true; otherwise, loggedIn class field is set to false and false is returned 
+   * @return true or false based on whether the login information of the customer
+   * stored in class fields last and customerNumber exist in Table ProductDeals_CUSTOMER
+   */
+  public boolean login() throws SQLException  {
+    Statement stmt;
+    ResultSet result;
+    Connection con = openDBConnection();
+    
+    
+    	
+    	
+    	
+    	//
+      String queryString = "Select * From thusen.PRODUCTDEALS_CUSTOMER c ";
+      queryString += "Where c.LAST=? and c.CUSTOMER_NUMBER=?";
+      
+      PreparedStatement p_stmt = con.prepareCall(queryString);
+      /* Set new attribute values */
+      p_stmt.clearParameters();
+      p_stmt.setString(1, this.last);
+      p_stmt.setString(2, this.customerNumber);
+      result = p_stmt.executeQuery();
+      
+      
+      /* Checks output and sets boolean based on if the user is logged in */
+      if(result.next() == true){
+        this.loggedIn = true; }
+      else{
+        this.loggedIn = false; }
+      p_stmt.close();
+    return this.loggedIn;
+  }
+  
+  
+  /**
+   * sets loggedIn class field to false
+   * @throws IllegalStateException if then method is called when loggedIn = false
+   */
+  public void logout() throws IllegalStateException {
+    if(! isLoggedIn())
+      throw new IllegalStateException("MUST BE LOGGED IN FIRST!");
+    
+    Connection con = openDBConnection();
+    
+    /* Closes DB Connection */
+    try{ con.close(); }  
+    catch(SQLException E){}
+    
+    this.loggedIn = false;
+  }
+  
+  /***************************************COMPLETE ME***************************************
+   * This method uses a Statement object to query the ProductDeals_CUSTOMER table
+   * for the customer whose customer number is stored in class field 
+   * customerNumber.
+   * @return a ResultSet object containing the record for the matching customer from 
+   * the ProductDeals_CUSTOMER table
+   * @throws IllegalStateException if then method is called when loggedIn = false
+   */
+  public ResultSet getCustomerInfo() throws IllegalStateException, SQLException{
+    Connection con = openDBConnection();
+    Statement stmt = con.createStatement();
+    /* Checks the 'logged in' boolean */
+    if(isLoggedIn() == false) throw new IllegalStateException();
+    /* Proceeds if user is logged in */
+    String queryString = "Select * From thusen.PRODUCTDEALS_CUSTOMER c Where c.CUSTOMER_NUMBER='" +this.customerNumber+"'";
+    ResultSet result = stmt.executeQuery(queryString);
+    return result;
+  }
+  
+  /***************************************COMPLETE ME***************************************
+   * This method uses a PreparedStatement object to update the LAST, FIRST,
+   * STREET, CITY,  STATE, and ZIP_CODE table fields in the ProductDeals_CUSTOMER table to the values 
+   * in the corresponding class fields (i.e. set table field LAST to the value 
+   * of class field last, etc ...) for the customer whose customer number is 
+   * stored in class field customerNumber.
+   * @throws IllegalStateException if then method is called when loggedIn = false
+   */
+  public void editCustomerInfo()  throws IllegalStateException, SQLException{
+    if(isLoggedIn() == false) throw new IllegalStateException();
+    Connection con = openDBConnection();
+    String queryString = "Update thusen.PRODUCTDEALS_CUSTOMER Set LAST=?, FIRST=?, STREET=?, CITY=?, STATE=?, ZIP_CODE=?";
+    queryString += "Where CUSTOMER_NUMBER='"+this.customerNumber+"'";
+    /* Declares PreparedStatement, clears the old values, and then passes the new ones */
+    PreparedStatement p_stmt = con.prepareCall(queryString);
+    /* Set new attribute values */
+    p_stmt.clearParameters();
+    p_stmt.setString(1, this.last);
+    p_stmt.setString(2, this.first);
+    p_stmt.setString(3, this.street);
+    p_stmt.setString(4, this.city);
+    p_stmt.setString(5, this.state);
+    p_stmt.setString(6, this.zipCode);
+    /* Executes the Prepared Statement query */
+    p_stmt.executeQuery();
+    p_stmt.close();
+  }
+  
+  /**
+   ***************************************COMPLETE ME***************************************
+   * This method uses a Statement object to query the ProductDeals_TRANS table
+   * for all transactions made by the customer whose customer number is 
+   * stored in class field customerNumber.
+   * @return a ResultSet containing all transactions made by the customer 
+   * whose customer number is stored in class field customerNumber.
+   * @throws IllegalStateException if then method is called when loggedIn = false
+   */
+  public ResultSet getAllTransactions()  throws IllegalStateException, SQLException{
+    /* Checks whether the user is logged in */
+    if(isLoggedIn() == false) throw new IllegalStateException();
+    /* Opens Connection and creates a new Statement */
+    Connection con = openDBConnection();
+    Statement stmt = con.createStatement();
+    String queryString = "Select * From PRODUCTDEALS_TRANS ";
+    queryString += "Where CUSTOMER_NUMBER='" + this.customerNumber+ "'";
+    ResultSet result = stmt.executeQuery(queryString);
+    
+    return result;
+  }
+  
+  /**
+   ***************************************COMPLETE ME***************************************
+   * This method uses a Statement object to query the ProductDeals_TRANSPART table
+   * for all transaction parts that belong to the transaction whose number 
+   * is specified as a parameter.
+   * @param transNumber the transaction number for which we need all the 
+   * transaction parts from table ProductDeals_TRANSPART
+   * @return a ResultSet containing all transaction parts that belong to the 
+   * transaction whose number is specified as a parameter.
+   * @throws IllegalStateException if then method is called when loggedIn = false
+   */
+  public ResultSet getTransactionParts(String transNumber) throws IllegalStateException, SQLException{
+    // Checks if user is currently logged in
+    if(isLoggedIn() == false) throw new IllegalStateException();
+    // Open Connection, create Statment and Query
+    Connection con = openDBConnection();
+    Statement stmt = con.createStatement();
+    String queryString = "Select * From PRODUCTDEALS_TRANSPART Where TRANS_NUMBER='" + transNumber + "'";
+    // Executes the query, then returns the ResultSet
+    ResultSet result = stmt.executeQuery(queryString);
+    return result;
+  }
+  
+  /**
+   ***************************************COMPLETE ME***************************************
+   * This method uses a PreparedStatement object to call an SQL stored function 
+   * Function ProductDeals_getTransVal(transNum varchar) to get the total $ value for
+   * a given transaction whose number is specified as a parameter.
+   * @param transNumber the transaction number for which we need the total $ value
+   * @return the total $ value for the transaction whose number is specified 
+   * as a parameter.
+   * @throws IllegalStateException if then method is called when loggedIn = false
+   */
+  public double getTransactionTotalValue(String transNumber) throws IllegalStateException, SQLException{
+    
+    
+    if(isLoggedIn() == false) throw new IllegalStateException();
+    double finalReturn = 0;
+    
+    Connection con = openDBConnection();
+    String queryString = "Select ProductDeals_getTransVal(?) from dual";
+    /* Declares PreparedStatement, clears the old values, and then passes the new ones */
+    PreparedStatement p_stmt = con.prepareCall(queryString);
+    /* Set new attribute values */
+    p_stmt.clearParameters();
+    p_stmt.setString(1, transNumber);
+    
+    /* Executes the Prepared Statement query */
+    ResultSet result = p_stmt.executeQuery();
+    if(result.next()){
+    finalReturn = result.getDouble(1);
+    System.out.println(finalReturn);
+    }
+    return finalReturn;
+    
+    
+    
+    
+  }
+  
+  
+  public String getPartDescription(String partNumber) throws IllegalStateException, SQLException{
+	    
+	    
+	    if(isLoggedIn() == false) throw new IllegalStateException();
+	    String finalReturn = "";
+	    
+	    Connection con = openDBConnection();
+	    String queryString = "Select PART_DESCRIPTION from PRODUCTDEALS_PART WHERE PART_NUMBER =?";
+	    /* Declares PreparedStatement, clears the old values, and then passes the new ones */
+	    PreparedStatement p_stmt = con.prepareCall(queryString);
+	    /* Set new attribute values */
+	    p_stmt.clearParameters();
+	    p_stmt.setString(1, partNumber);
+	    
+	    /* Executes the Prepared Statement query */
+	    ResultSet result = p_stmt.executeQuery();
+	    if(result.next()){
+	    finalReturn = result.getString(1);
+	    System.out.println(finalReturn);
+	    }
+	    return finalReturn;
+	    
+	    
+	  }
+}
