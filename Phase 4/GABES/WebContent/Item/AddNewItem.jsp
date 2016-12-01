@@ -5,12 +5,12 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../potatoes.css">
-<title>Update Profile</title>
+<title>List New Item</title>
 </head>
 <body style="background-color:#a7adba">
 	<div class="form-style-2">
 		<!-- Heading at top of the page -->
-		<div class="form-style-2-heading">Update Information Below</div>
+		<div class="form-style-2-heading">Please Fill Out a</div>
 		
 		<% try{
     		ResultSet rs = user.getUserInfo(); 

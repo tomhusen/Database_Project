@@ -1,6 +1,7 @@
 package GABES;
 
 import java.io.Serializable;
+import java.sql.CallableStatement;
 //Load JDBC API functions
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -303,12 +304,42 @@ public class User implements Serializable {
 		p_stmt.executeQuery();
 		p_stmt.close();
 	}
-//
+
+	/**
+	 * Method: addNewUser()
+	 * 
+	 * The purpose of this function is to add a new user to the database
+	 * 
+	 */
+	public void addNewUser(String n_username, String n_email, String n_password, String n_phone, 
+			String n_first, String n_last, String n_isAdmin, String n_isSeller, String n_isBuyer) throws SQLException {
+		
+		/** Cast Strings to ints */
+		char ni_isAdmin = n_isAdmin.charAt(0);
+		char ni_isSeller = n_isSeller.charAt(0);
+		char ni_isBuyer = n_isBuyer.charAt(0);
+
+		Connection con = openDBConnection();
+		CallableStatement callStmt;
+		callStmt = con.prepareCall(" {call team1.GABES_ADD_USER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?}");
+
+		callStmt.setString(1, n_username);
+		callStmt.setString(2, n_email);
+		callStmt.setString(3, n_password);
+		callStmt.setString(4, n_phone);
+		callStmt.setString(5, n_first);
+		callStmt.setString(6, n_last);
+		callStmt.setLong(7, ni_isAdmin);
+		callStmt.setString(8, this.username);
+		callStmt.setLong(9, ni_isSeller);
+		callStmt.setLong(10, ni_isBuyer);
+		/* Executes the Prepared Statement query */
+		callStmt.execute();
+		callStmt.close();
+	}
+	
 //	/**
-//	 *************************************** COMPLETE ME*************************************** This method uses a
-//	 * Statement object to query the ProductDeals_TRANS table for all
-//	 * transactions made by the customer whose customer number is stored in
-//	 * class field customerNumber.
+//	 * Method: getItemInfo()
 //	 * 
 //	 * @return a ResultSet containing all transactions made by the customer
 //	 *         whose customer number is stored in class field customerNumber.

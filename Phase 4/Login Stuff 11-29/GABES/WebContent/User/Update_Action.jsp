@@ -8,6 +8,6 @@
 	catch(IllegalStateException ise){
 		out.println(ise.getMessage());
 	}
-	response.sendRedirect("Welcome.jsp");
+	response.sendRedirect("../Login_action.jsp");
 
 %> 
