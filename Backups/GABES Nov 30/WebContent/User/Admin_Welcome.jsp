@@ -8,7 +8,7 @@
 <link rel="stylesheet" type="text/css" href="../potatoes.css">
 <title>Welcome!</title>
 </head>
-<body>
+<body style="background-color:#a7adba">
 
 	<div class="form-style-2">
 		<!-- Heading at top of the page -->
@@ -25,7 +25,6 @@
 		</form>
 		<br>
 	
-		
 		<form method="post" action="Admin_Welcome.jsp">
 			<input name="Submit" value="Click Here to Access Admin Menu"
 				type="submit"><br>
