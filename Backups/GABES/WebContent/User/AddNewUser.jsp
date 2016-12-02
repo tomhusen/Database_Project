@@ -17,31 +17,31 @@
 		<table>
 			<tr>
 				<td>Username</td>
-				<td><input name="n_username" value=""></td>
+				<td><input name="n_username" MaxLength="15" value=""></td>
 			</tr><tr>
 				<td>Email Address</td>
-				<td><input name="n_email" value=""></td>
+				<td><input name="n_email" MaxLength="30" value=""></td>
 			</tr><tr>
 				<td>Password</td>
-				<td><input name="n_password" value=""></td>
+				<td><input name="n_password" MaxLength="15" value=""></td>
 			</tr><tr>
 				<td>Phone Number</td>
-				<td><input name="n_phone" value=""></td>
+				<td><input name="n_phone" MaxLength="10" value=""></td>
 			</tr><tr>
 				<td>First Name</td>
-				<td><input name="n_first" value=""></td>
+				<td><input name="n_first" MaxLength="12" value=""></td>
 			</tr><tr>
 				<td>Last Name</td>
-				<td><input name="n_last" value=""></td>
+				<td><input name="n_last" MaxLength="12" value=""></td>
 			</tr><tr>
 				<td>Admin User? (1=yes  0=no)</td>
-				<td><input name="n_admin" value=""></td>
+				<td><input name="n_admin" MaxLength="1" value=""></td>
 			</tr><tr>
 				<td>Seller? (1=yes  0=no)</td>
-				<td><input name="n_seller" value=""></td>
+				<td><input name="n_seller" MaxLength="1" value=""></td>
 			</tr><tr>
 				<td>Buyer? (1=yes  0=no)</td>
-				<td><input name="n_buyer" value=""></td>
+				<td><input name="n_buyer" MaxLength="1" value=""></td>
 			</tr> 
 		
 		

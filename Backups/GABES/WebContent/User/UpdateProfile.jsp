@@ -28,16 +28,16 @@
 				<td><input readonly="readonly" name="username" value="<%=rs.getString("USERNAME")%>"></td>
 			</tr><tr>
 				<td>Email Address</td>
-				<td><input name="email" value="<%=rs.getString("EMAIL")%>"></td>
+				<td><input name="email"  MaxLength="30" value="<%=rs.getString("EMAIL")%>"></td>
 			</tr><tr>
 				<td>Phone Number</td>
-				<td><input name="phone" value="<%=rs.getString("PHONE")%>"></td>
+				<td><input name="phone"  MaxLength="10" value="<%=rs.getString("PHONE")%>"></td>
 			</tr><tr>
 				<td>First Name</td>
-				<td><input name="first" value="<%=rs.getString("FIRST_N")%>"></td>
+				<td><input name="first"  MaxLength="12" value="<%=rs.getString("FIRST_N")%>"></td>
 			</tr><tr>
 				<td>Last Name</td>
-				<td><input name="last" value="<%=rs.getString("LAST_N")%>"></td>
+				<td><input name="last" MaxLength="12" value="<%=rs.getString("LAST_N")%>"></td>
 			</tr><tr>
 				<td>Creation Admin</td>
 				<td><input readonly="readonly" name="admin_username" value="<%=rs.getString("A_USERNAME")%>"> </td>
