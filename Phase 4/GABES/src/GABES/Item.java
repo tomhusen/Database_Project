@@ -1,6 +1,7 @@
 package GABES;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 //Load JDBC API functions
 import java.sql.Connection;
@@ -29,12 +30,12 @@ public class Item implements Serializable {
 	private String item_id;
 	private String item_category;
 	private String status;
-	private Double selling_price;
+	private BigDecimal selling_price;
 	private String description;
-	private Double commission_fee;
+	private BigDecimal commission_fee;
 	private String item_name;
-	private Double current_bid;
-	private Double start_price;
+	private BigDecimal current_bid;
+	private BigDecimal start_price;
 	private Timestamp start_date;
 	private Timestamp end_date;
 	private String user_id;
@@ -64,11 +65,11 @@ public class Item implements Serializable {
 		this.status = status;
 	}
 
-	public Double getSellingPrice() {
+	public BigDecimal getSellingPrice() {
 		return selling_price;
 	}
 
-	public void setSellingPrice(Double selling_price) {
+	public void setSellingPrice(BigDecimal selling_price) {
 		this.selling_price = selling_price;
 	}
 
@@ -80,11 +81,11 @@ public class Item implements Serializable {
 		this.description = description;
 	}
 
-	public Double getCommissionFee() {
+	public BigDecimal getCommissionFee() {
 		return commission_fee;
 	}
 
-	public void setCommissionFee(Double commission_fee) {
+	public void setCommissionFee(BigDecimal commission_fee) {
 		this.commission_fee = commission_fee;
 	}
 
@@ -96,19 +97,19 @@ public class Item implements Serializable {
 		this.item_name = item_name;
 	}
 
-	public Double getCurrentBid() {
+	public BigDecimal getCurrentBid() {
 		return current_bid;
 	}
 
-	public void setCurrentBid(Double current_bid) {
+	public void setCurrentBid(BigDecimal current_bid) {
 		this.current_bid = current_bid;
 	}
 
-	public Double getStartPrice() {
+	public BigDecimal getStartPrice() {
 		return start_price;
 	}
 
-	public void setStartPrice(Double start_price) {
+	public void setStartPrice(BigDecimal start_price) {
 		this.start_price = start_price;
 	}
 
@@ -232,9 +233,10 @@ public class Item implements Serializable {
 	 * The purpose of this function is to add a new user to the database
 	 * 
 	 */
-	public void addNewItem(String n_itemCategory, String n_description, String n_itemName, String n_startPrice, Timestamp n_startDate, 
+	public void addNewItem(String n_itemCategory, String n_description, String n_itemName, String ns_startPrice, Timestamp n_startDate, 
 			Timestamp n_endDate, String n_userID) throws SQLException {
 
+		BigDecimal n_startPrice = new BigDecimal(ns_startPrice);
 		Connection con = openDBConnection();
 		CallableStatement callStmt = con.prepareCall(" {call team1.POST_ITEM(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
 
@@ -245,7 +247,7 @@ public class Item implements Serializable {
 		callStmt.setString(5, "");
 		callStmt.setString(6, n_itemName);
 		callStmt.setString(7, "");
-		callStmt.setString(8, n_startPrice);
+		callStmt.setBigDecimal(8, n_startPrice);
 		callStmt.setTimestamp(9, n_startDate);
 		callStmt.setTimestamp(10, n_endDate);
 		callStmt.setString(11, n_userID);
