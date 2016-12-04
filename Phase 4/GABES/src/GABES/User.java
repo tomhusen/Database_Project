@@ -195,6 +195,7 @@ public class User implements Serializable {
 		/** Checks the output of the query, sets loggedIn appropriately */
 		if (result.next() == true) {
 			this.loggedIn = true;
+			this.user_id = result.getString(1);
 		} else {
 			this.loggedIn = false;
 		}

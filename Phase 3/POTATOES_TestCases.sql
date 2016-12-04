@@ -267,7 +267,7 @@ EXEC GABES_NEW_BID(9, 1, 180);
   
 -- Outputs success message if successful, or an error message if trying to 
 -- add a duplicate record already existing in the databse
-EXECUTE POST_ITEM('Books',0,null,'Big Brother is Watching', null, '1984', null, 18.99, '14-NOV-16 02.21.19.245760000', '29-DEC-18 04.00.00.245760000 AM', 3, null);
+EXECUTE POST_ITEM('Books',0,null,'Big Brother is Watching', null, '1984', null, 18.99, '14-NOV-16', '29-DEC-18 04.00.00.245760000 AM', 3, null);
   
 
   -- ****************************************************************************

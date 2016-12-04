@@ -1,7 +1,6 @@
 package GABES;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.CallableStatement;
 //Load JDBC API functions
 import java.sql.Connection;
@@ -10,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
+
 
 // import oracle.jdbc.*;
 
@@ -30,14 +29,14 @@ public class Item implements Serializable {
 	private String item_id;
 	private String item_category;
 	private String status;
-	private BigDecimal selling_price;
+	private String selling_price;
 	private String description;
-	private BigDecimal commission_fee;
+	private String commission_fee;
 	private String item_name;
-	private BigDecimal current_bid;
-	private BigDecimal start_price;
-	private Timestamp start_date;
-	private Timestamp end_date;
+	private String current_bid;
+	private String start_price;
+	private String start_date;
+	private String end_date;
 	private String user_id;
 	private String winner_id;
 
@@ -65,11 +64,11 @@ public class Item implements Serializable {
 		this.status = status;
 	}
 
-	public BigDecimal getSellingPrice() {
+	public String getSellingPrice() {
 		return selling_price;
 	}
 
-	public void setSellingPrice(BigDecimal selling_price) {
+	public void setSellingPrice(String selling_price) {
 		this.selling_price = selling_price;
 	}
 
@@ -81,11 +80,11 @@ public class Item implements Serializable {
 		this.description = description;
 	}
 
-	public BigDecimal getCommissionFee() {
+	public String getCommissionFee() {
 		return commission_fee;
 	}
 
-	public void setCommissionFee(BigDecimal commission_fee) {
+	public void setCommissionFee(String commission_fee) {
 		this.commission_fee = commission_fee;
 	}
 
@@ -97,35 +96,35 @@ public class Item implements Serializable {
 		this.item_name = item_name;
 	}
 
-	public BigDecimal getCurrentBid() {
+	public String getCurrentBid() {
 		return current_bid;
 	}
 
-	public void setCurrentBid(BigDecimal current_bid) {
+	public void setCurrentBid(String current_bid) {
 		this.current_bid = current_bid;
 	}
 
-	public BigDecimal getStartPrice() {
+	public String getStartPrice() {
 		return start_price;
 	}
 
-	public void setStartPrice(BigDecimal start_price) {
+	public void setStartPrice(String start_price) {
 		this.start_price = start_price;
 	}
 
-	public Timestamp getStartDate() {
+	public String getStartDate() {
 		return start_date;
 	}
 
-	public void setStartDate(Timestamp start_date) {
+	public void setStartDate(String start_date) {
 		this.start_date = start_date;
 	}
 
-	public Timestamp getEndDate() {
+	public String getEndDate() {
 		return end_date;
 	}
 
-	public void setIsBuyer(Timestamp end_date) {
+	public void setIsBuyer(String end_date) {
 		this.end_date = end_date;
 	}
 	
@@ -233,26 +232,20 @@ public class Item implements Serializable {
 	 * The purpose of this function is to add a new user to the database
 	 * 
 	 */
-	public void addNewItem(String n_itemCategory, String n_description, String n_itemName, String ns_startPrice, Timestamp n_startDate, 
-			Timestamp n_endDate, String n_userID) throws SQLException {
+	public void addNewItem(String n_itemCategory, String n_description, String n_itemName, String n_startPrice, 
+			String n_endDate, String n_userID) throws SQLException {
 
-		BigDecimal n_startPrice = new BigDecimal(ns_startPrice);
 		Connection con = openDBConnection();
-		CallableStatement callStmt = con.prepareCall(" {call team1.POST_ITEM(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
-
+		CallableStatement callStmt = con.prepareCall(" {call team1.POST_ITEM(?, ?, ?, ?, ?, ?)}");
+		
+		/** Defines attributes to pass to the SQL Procedure - as well as some default values */
 		callStmt.setString(1, n_itemCategory);
-		callStmt.setString(2, "");
-		callStmt.setString(3, "");
-		callStmt.setString(4, n_description);
-		callStmt.setString(5, "");
-		callStmt.setString(6, n_itemName);
-		callStmt.setString(7, "");
-		callStmt.setBigDecimal(8, n_startPrice);
-		callStmt.setTimestamp(9, n_startDate);
-		callStmt.setTimestamp(10, n_endDate);
-		callStmt.setString(11, n_userID);
-		callStmt.setString(12, "");
-
+		callStmt.setString(2, n_description);
+		callStmt.setString(3, n_itemName);
+		callStmt.setString(4, n_startPrice);
+		callStmt.setString(5, n_endDate);
+		callStmt.setString(6, n_userID);
+		
 		/* Executes the Prepared Statement query */
 		callStmt.execute();
 		callStmt.close();
