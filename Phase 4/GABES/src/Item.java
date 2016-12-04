@@ -1,6 +1,7 @@
 package GABES;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 //Load JDBC API functions
 import java.sql.Connection;
@@ -9,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
+
 // import oracle.jdbc.*;
 
 /**
@@ -18,26 +21,114 @@ import java.sql.Statement;
  * @author Team Potatoes (Grant Boyer, Kyle Olson, Thomas Husen)
  */
 @SuppressWarnings("serial")
-public class User implements Serializable {
+public class Item implements Serializable {
 
 	/**
 	 * The following variables correspond to fields in the GABES_USER database
 	 * table
 	 */
+	private String item_id;
+	private String item_category;
+	private String status;
+	private BigDecimal selling_price;
+	private String description;
+	private BigDecimal commission_fee;
+	private String item_name;
+	private BigDecimal current_bid;
+	private BigDecimal start_price;
+	private Timestamp start_date;
+	private Timestamp end_date;
 	private String user_id;
-	private String username;
-	private String email;
-	private String password;
-	private String phone;
-	private String first;
-	private String last;
-	private int is_Admin;
-	private String admin_username;
-	private int is_Seller;
-	private int is_Buyer;
-	/** Boolean for if the user is logged in */
-	private boolean loggedIn = false;
+	private String winner_id;
 
+	public String getItemID() {
+		return item_id;
+	}
+
+	public void setItemID(String item_id) {
+		this.item_id = item_id;
+	}
+
+	public String item_category() {
+		return item_category;
+	}
+
+	public void setItemCategory(String item_category) {
+		this.item_category = item_category;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public BigDecimal getSellingPrice() {
+		return selling_price;
+	}
+
+	public void setSellingPrice(BigDecimal selling_price) {
+		this.selling_price = selling_price;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public BigDecimal getCommissionFee() {
+		return commission_fee;
+	}
+
+	public void setCommissionFee(BigDecimal commission_fee) {
+		this.commission_fee = commission_fee;
+	}
+
+	public String getItemName() {
+		return item_name;
+	}
+
+	public void setItemName(String item_name) {
+		this.item_name = item_name;
+	}
+
+	public BigDecimal getCurrentBid() {
+		return current_bid;
+	}
+
+	public void setCurrentBid(BigDecimal current_bid) {
+		this.current_bid = current_bid;
+	}
+
+	public BigDecimal getStartPrice() {
+		return start_price;
+	}
+
+	public void setStartPrice(BigDecimal start_price) {
+		this.start_price = start_price;
+	}
+
+	public Timestamp getStartDate() {
+		return start_date;
+	}
+
+	public void setStartDate(Timestamp start_date) {
+		this.start_date = start_date;
+	}
+
+	public Timestamp getEndDate() {
+		return end_date;
+	}
+
+	public void setIsBuyer(Timestamp end_date) {
+		this.end_date = end_date;
+	}
+	
 	public String getUserID() {
 		return user_id;
 	}
@@ -45,85 +136,13 @@ public class User implements Serializable {
 	public void setUserID(String user_id) {
 		this.user_id = user_id;
 	}
-
-	public String getUsername() {
-		return username;
+	
+	public String getWinnerID() {
+		return winner_id;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getFirst() {
-		return first;
-	}
-
-	public void setFirst(String first) {
-		this.first = first;
-	}
-
-	public String getLast() {
-		return last;
-	}
-
-	public void setLast(String last) {
-		this.last = last;
-	}
-
-	public int getIsAdmin() {
-		return is_Admin;
-	}
-
-	public void setIsAdmin(int is_Admin) {
-		this.is_Admin = is_Admin;
-	}
-
-	public String getAdminUsername() {
-		return admin_username;
-	}
-
-	public void setAdminUsername(String admin_username) {
-		this.admin_username = admin_username;
-	}
-
-	public int getIsSeller() {
-		return is_Seller;
-	}
-
-	public void setIsSeller(int is_Seller) {
-		this.is_Seller = is_Seller;
-	}
-
-	public int getIsBuyer() {
-		return is_Buyer;
-	}
-
-	public void setIsBuyer(int is_Buyer) {
-		this.is_Buyer = is_Buyer;
+	public void setWinnerID(String winner_id) {
+		this.winner_id = winner_id;
 	}
 
 	/**
@@ -131,7 +150,7 @@ public class User implements Serializable {
 	 * 
 	 * No need for additional constructors
 	 */
-	public User() {
+	public Item() {
 	}
 
 	/**
@@ -165,180 +184,81 @@ public class User implements Serializable {
 		return null;
 	}
 
-	/**
-	 * Method: isLoggedIn()
-	 * 
-	 * This is a simple 'getter' method to determine whether the
-	 * loggedIn variable is true (that is whether the user is 
-	 * currently logged in)
-	 * 
-	 * @return whether the user is currently logged in
-	 */
-	public Boolean isLoggedIn() {
-		return this.loggedIn;
-	}
 
 	/**
-	 * Method: login()
-	 * 
-	 * @return 
-	 */
-	public boolean login() throws SQLException {
-		Connection con = openDBConnection();
-		String queryString = "Select * From team1.GABES_USER Where USERNAME=? and PASS=?";
-		PreparedStatement p_stmt = con.prepareCall(queryString);
-		/** Clears old, then sets new parameter values */
-		p_stmt.clearParameters();
-		p_stmt.setString(1, this.username);
-		p_stmt.setString(2, this.password);
-		//p_stmt.setString(3, this.user_id);
-		ResultSet result = p_stmt.executeQuery();
-		/** Checks the output of the query, sets loggedIn appropriately */
-		if (result.next() == true) {
-			this.loggedIn = true;
-		} else {
-			this.loggedIn = false;
-		}
-		p_stmt.close();		
-		return this.loggedIn;
-	}
-
-	/**
-	 * Method: logout()
-	 * 
-	 * This method will simply set the loggedIn variable to false 
-	 * if the appropriate conditions are met. Also closes connection.
-	 * 
-	 * @throws IllegalStateException
-	 *             if then method is called when loggedIn = false
-	 */
-	public void logout() throws IllegalStateException {
-		if (!isLoggedIn())
-			throw new IllegalStateException("Error: Cannot logout without being logged in");
-		Connection con = openDBConnection();
-		try {
-			con.close();
-		} catch (SQLException E) {
-		}
-		this.loggedIn = false;
-	}
-	
-	/**
-	 * Method: isThisUserAdmin()
-	 * 
-	 * @return 
-	 */
-	public boolean isThisUserAdmin() throws IllegalStateException, SQLException {
-		if (isLoggedIn() == false)
-			throw new IllegalStateException();
-		Connection con = openDBConnection();
-		Boolean adminVal = false;
-		String queryString = "Select IS_ADMIN From team1.GABES_USER Where USERNAME=?";
-		PreparedStatement p_stmt = con.prepareCall(queryString);
-		/** Clears old, then sets new parameter values */
-		p_stmt.clearParameters();
-		p_stmt.setString(1, this.username);
-		ResultSet result = p_stmt.executeQuery();
-		/** Checks the output of the query, sets loggedIn appropriately */
-		if (result.next()) {
-			if(result.getInt(1)==1){
-				this.is_Admin = 1;
-				adminVal = true;
-			}
-		else {
-			this.is_Admin = 0;
-			adminVal = false;
-		}}
-		p_stmt.close();
-		return adminVal;
-	}
-
-	/**
-	 * Method: getUserInfo()
+	 * Method: getItemInfo()
 	 * 
 	 * The purpose of this method is to use the connection to our Oracle Database
-	 * to get all of the information about a user, specified by their user_id
+	 * to get all of the information about an item, specified by their item_id
 	 * 
 	 * @return a ResultSet object containing the record for the matching
-	 *         customer from the GABES_USER table
-	 * @throws IllegalStateException
-	 *             if then method is called when loggedIn = false
+	 *         item from the GABES_ITEM table
 	 */
-	public ResultSet getUserInfo() throws IllegalStateException, SQLException {
+	public ResultSet getItemInfo() throws SQLException {
 		Connection con = openDBConnection();
 		Statement stmt = con.createStatement();
-		/** Checks the 'logged in' boolean */
-		if (isLoggedIn() == false)
-			throw new IllegalStateException();
 		/** Proceeds if user is logged in */
-		String queryString = "Select * From team1.GABES_USER u Where u.USERNAME='"
-				+ this.username + "'";
+		String queryString = "Select * From team1.GABES_ITEM i Where i.ITEM_ID='"
+				+ this.item_id + "'";
 		ResultSet result = stmt.executeQuery(queryString);
 		return result;
 	}
 	
 	/**
-	 * Method: editUserInfo()
+	 * Method: editItemInfo()
 	 * 
 	 * The purpose of this function is to update the information for a specific
-	 * user in the database
+	 * item in the database
 	 * 
-	 * @throws IllegalStateException
-	 *             if then method is called when loggedIn = false
 	 */
-	public void editUserInfo() throws IllegalStateException, SQLException {
-		if (isLoggedIn() == false)
-			throw new IllegalStateException();
+	public void editItemInfo() throws SQLException {
 		Connection con = openDBConnection();
-		String queryString = "Update team1.GABES_USER Set EMAIL=?, PASS=?, PHONE=?, FIRST_N=?, LAST_N=?";
-		queryString += "Where USERNAME='" + this.username + "'";
+		String queryString = "Update team1.GABES_ITEM Set ITEM_CATEGORY=?, DESCRIPTION=?, ITEM_NAME=?";
+		queryString += "Where ITEM_ID='" + this.item_id + "'";
 		/** Clears parameters and then sets new values */
 		PreparedStatement p_stmt = con.prepareCall(queryString);
 		/** Set new attribute values */
 		p_stmt.clearParameters();
-		p_stmt.setString(1, this.email);
-		p_stmt.setString(2, this.password);
-		p_stmt.setString(3, this.phone);
-		p_stmt.setString(4, this.first);
-		p_stmt.setString(5, this.last);
+		p_stmt.setString(1, this.item_category);
+		p_stmt.setString(2, this.description);
+		p_stmt.setString(3, this.item_name);
 		/* Executes the Prepared Statement query */
 		p_stmt.executeQuery();
 		p_stmt.close();
 	}
 
 	/**
-	 * Method: addNewUser()
+	 * Method: addNewItem()
 	 * 
 	 * The purpose of this function is to add a new user to the database
 	 * 
 	 */
-	public void addNewUser(String n_username, String n_email, String n_password, String n_phone, 
-			String n_first, String n_last, String n_isAdmin, String n_isSeller, String n_isBuyer) throws SQLException {
-		
-		/** Cast Strings to ints */
-//		char ni_isAdmin = n_isAdmin.charAt(0);
-//		char ni_isSeller = n_isSeller.charAt(0);
-//		char ni_isBuyer = n_isBuyer.charAt(0);
+	public void addNewItem(String n_itemCategory, String n_description, String n_itemName, String ns_startPrice, Timestamp n_startDate, 
+			Timestamp n_endDate, String n_userID) throws SQLException {
 
+		BigDecimal n_startPrice = new BigDecimal(ns_startPrice);
 		Connection con = openDBConnection();
-		CallableStatement callStmt = con.prepareCall(" {call team1.GABES_ADD_USER(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
+		CallableStatement callStmt = con.prepareCall(" {call team1.POST_ITEM(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)}");
 
-		callStmt.setString(1, n_username);
-		callStmt.setString(2, n_email);
-		callStmt.setString(3, n_password);
-		callStmt.setString(4, n_phone);
-		callStmt.setString(5, n_first);
-		callStmt.setString(6, n_last);
-		callStmt.setString(7, n_isAdmin);
-		callStmt.setString(8, this.username);
-		callStmt.setString(9, n_isSeller);
-		callStmt.setString(10, n_isBuyer);
+		callStmt.setString(1, n_itemCategory);
+		callStmt.setString(2, "");
+		callStmt.setString(3, "");
+		callStmt.setString(4, n_description);
+		callStmt.setString(5, "");
+		callStmt.setString(6, n_itemName);
+		callStmt.setString(7, "");
+		callStmt.setBigDecimal(8, n_startPrice);
+		callStmt.setTimestamp(9, n_startDate);
+		callStmt.setTimestamp(10, n_endDate);
+		callStmt.setString(11, n_userID);
+		callStmt.setString(12, "");
+
 		/* Executes the Prepared Statement query */
 		callStmt.execute();
 		callStmt.close();
 	}
-	
-//	/**
+//	
+////	/**
 //	 * Method: getItemInfo()
 //	 * 
 //	 * @return a ResultSet containing all transactions made by the customer

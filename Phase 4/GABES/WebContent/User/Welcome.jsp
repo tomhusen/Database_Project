@@ -14,7 +14,8 @@
 		<!-- Heading at top of the page -->
 		<div class="form-style-2-heading">
 			Welcome <%=user.getUsername()%></div>
-
+		<div class="form-style-2-heading">
+			This is user number : <%=user.getUserID()%></div>
 		<form method="post" action="UpdateProfile.jsp">
 			<input name="Submit" value="Update My Profile" type="submit"><br>
 		</form>
@@ -23,6 +24,15 @@
 		<form method="post" action=SellingManagement.html>
 			<input name="Submit" value="Manage My Sales" type="submit"><br>
 		</form>
+		<br>
+		<form method="post" action="../Item/ItemList.jsp">
+			<input name="Submit" value="View Current User's Listed Items" type="submit"><br>
+		</form>
+		<br>
+		<form method="post" action="../Item/ListOfItemsToBidOn.jsp">
+			<input name="Submit" value="View Items Up for Sale" type="submit"><br>
+		</form>
+		<br>
 
 		<br>
 		<br>

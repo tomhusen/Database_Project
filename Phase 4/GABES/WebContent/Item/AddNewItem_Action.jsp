@@ -8,10 +8,11 @@
 	String n_description = request.getParameter("n_description");
 	String n_itemName = request.getParameter("n_itemName");
 	String n_startPrice = request.getParameter("n_startPrice");
-	String n_endDate = request.getParameter("n_endDate");
+	Timestamp n_startDate = request.getParameter("n_startDate");
+	Timestamp n_endDate = request.getParameter("n_endDate");
 
 	try{
-		item.addNewItem(n_category, n_description, n_itemName, n_startPrice, n_endDate, user.getUserID());
+		item.addNewItem(n_category, n_description, n_itemName, n_startPrice, n_startDate, n_endDate, user.getUserID());
 	}	
 	catch(IllegalStateException ise){
 		out.println(ise.getMessage());
