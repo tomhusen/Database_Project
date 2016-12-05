@@ -1,0 +1,52 @@
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../potatoes.css">
+<title>Search for Items</title>
+</head>
+<body style="background-color: #a7adba">
+	<div class="form-style-2">
+		<!-- Heading at top of the page -->
+		<div class="form-style-2-heading">Search Using Criteria Listed</div>
+
+		<table cellpadding="7">
+			<tr>
+				<td>Item ID</td>
+				<td><input name="s_itemID" MaxLength="10" value=""></td>
+			</tr>
+			<tr>
+				<td>Keyword</td>
+				<td><input name="s_keyword" MaxLength="30" value=""></td>
+			</tr>
+			<tr>
+				<td>Category</td>
+				<td><input name="s_category" MaxLength="15" value=""></td>
+			</tr>
+			<tr>
+				<td>Current Bid</td>
+				<td><input name="s_lowBid" MaxLength="10" value="Min Bid">
+					and</td>
+				<td><input name="s_highBid" MaxLength="10" value="Max Bid"></td>
+			</tr>
+			<tr>
+				<td>End Date</td>
+				<td><input name="month" MaxLength="2" value="MM"
+					style="width: 25px;">- <input name="day" MaxLength="2"
+					value="DD" style="width: 25px;">- <input name="year"
+					MaxLength="4" value="YYYY" style="width: 50px;"></td>
+			</tr>
+
+		</table>
+
+		<form method="post" action="SearchResults.jsp">
+			<input name="Submit" value="Search" type="submit"><br>
+		</form>
+		<!-- Return to previous menu button -->
+		<form method="post" action="../Login_action.jsp">
+			<input name="Submit" value="Return to Menu" type="submit"><br>
+		</form>
+	</div>
+
+</body>
+</html>

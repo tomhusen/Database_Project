@@ -1,26 +1,17 @@
 <html>
-
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../potatoes.css">
-<title>Item List</title>
+<title>Search Results</title>
 </head>
-
 <%@ page language="java" import="java.sql.*"%>
 <jsp:useBean id="item" class="GABES.Item" scope="page" />
-<jsp:useBean id="user" class="GABES.User" scope="session" />
 
 <body style="background-color: #a7adba">
-	<div class="form-style-2-heading">
-		All of the items sold or currently up for auction by 
-		<%=user.getUsername()%>
+	<div class="form-style-2-heading">Search Results</div>
 	<table style="text-align: left; width: 100%;" border="1"
 		cellpadding="2" cellspacing="2">
-
-
 		<tbody>
-
-
 			<tr style="background-color: #fc9749">
 				<td style="vertical-align: top;">Item ID<br></td>
 				<td style="vertical-align: top;">Item Name<br></td>
@@ -33,9 +24,20 @@
 				<td style="vertical-align: top;"><br></td>
 			</tr>
 			<%
+				String s_itemID = request.getParameter("s_itemID");
+				String s_keyword = request.getParameter("s_keyword");
+				String s_category = request.getParameter("s_category");
+				String s_lowBid = request.getParameter("s_lowBid");
+				String s_highBid = request.getParameter("s_highBid");
+
+				String s_month = request.getParameter("month");
+				String s_day = request.getParameter("day");
+				String s_year = request.getParameter("year");
+
+				String s_endDate = s_year + "-" + s_month + "-" + s_day;
 
 				try {
-					ResultSet rs = item.getAllItems(user.getUserID());
+					ResultSet rs = item.search(s_itemID, s_keyword, s_category, s_lowBid, s_highBid, s_endDate);
 					while (rs.next()) {
 			%>
 
@@ -43,17 +45,18 @@
 			<tr style="background-color: #e9eadd">
 				<td style="vertical-align: top;"><br> <%=rs.getString("ITEM_ID")%></td>
 				<td style="vertical-align: top;"><br> <%=rs.getString("ITEM_NAME")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getTimestamp("START_DATE")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getTimestamp("END_DATE")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getDouble("START_PRICE")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getDouble("CURRENT_BID")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getInt("STATUS")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getString("CATEGORY")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getString("START_DATE")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getString("END_DATE")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getString("START_PRICE")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getString("CURRENT_BID")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getString("STATUS")%></td>
 				<td style="vertical-align: top;">
 					<!-- passes the item number to the item info page (look at transactions example) -->
 					<form method="GET" action="ItemInfo.jsp">
-						<input id="itemID" name="id"
-							value=<%=rs.getString("ITEM_ID")%> type="hidden"><br>
-						<input value="Item Info" type="submit">
+						<input id="itemID" name="id" value=<%=rs.getString("ITEM_ID")%>
+							type="hidden"><br> <input value="Item Info"
+							type="submit">
 					</form>
 				</td>
 				<!-- passes the user number to the bidder list -->
