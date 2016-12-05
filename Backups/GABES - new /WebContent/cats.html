@@ -1,0 +1,71 @@
+<html>
+<head>
+</head>
+<body>
+  <h1 style="color:red" id="text"></h1>
+  <img style = "width: 100%; height: 100%; position:absolute;" id="asdf" src="http://3.bp.blogspot.com/-5tna2I9cHPo/TV5XB85nTTI/AAAAAAAAAvY/uPnXQA8sxn8/s1600/cat-allergy.jpgsmiley.gif"
+  alt="Smiley face">
+  <script language=JavaScript>
+    var cats = ["images/potato1.jpg",
+                "images/potato2.jpg",
+                "images/potato3.jpg",
+                "images/potato4.png",
+                "images/potato5.png"]
+    var asdf = document.getElementById('asdf');
+    var text = document.getElementById('text');
+    var r = random(0, 255);
+    var g = random(0, 255);
+    var b = random(0, 255);
+    var r1 = random(0, 255);
+    var g1 = random(0, 255);
+    var b1 = random(0, 255);
+    var width = random(15, 100) + "%";
+    var height = random(15, 100) + "%";
+    var top = random(0, 100) + "%";
+    var left = random(0, 100) + "%";
+    var time = random(100, 200);
+    var cat = cats[random(0, cats.length)];
+    var color = rgb(r,g,b);
+    var color1 = rgb(r1,g1,b1);
+
+    function random(l, u) {
+      return Math.floor((Math.random() * (u - l))) + l;
+    }
+    function rgb(r, g, b){
+      r = Math.floor(r);
+      g = Math.floor(g);
+      b = Math.floor(b);
+      return ["rgb(",r,",",g,",",b,")"].join("");
+    }
+    function lightning()
+      {
+          document.bgColor=color;
+          asdf.style.width=width;
+          asdf.style.height=height;
+          asdf.style.top = top;
+          asdf.style.left = left;
+          asdf.src = cat;
+          text.style.color = color1;
+          r = random(0, 255);
+          g = random(0, 255);
+          b = random(0, 255);
+          r1 = random(0, 255);
+          g1 = random(0, 255);
+          b1 = random(0, 255);
+          width = random(15, 100) + "%";
+          height = random(15, 100) + "%";
+          top = random(0, 100) + "%";
+          left = random(0, 100) + "%";
+          time = random(100, 200);
+          cat = cats[random(0, cats.length)];
+          color = rgb(r,g,b);
+          color1 = rgb(r1,g1,b1);
+          setTimeout("lightning()",time);
+      }
+  var audio = new Audio('images/asdf.mp3');
+  audio.loop = true;
+  audio.play();
+  setTimeout("lightning()",1);
+  </script>
+</body>
+</html>

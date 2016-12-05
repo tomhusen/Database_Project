@@ -23,6 +23,15 @@
 		<form method="post" action=SellingManagement.html>
 			<input name="Submit" value="Manage My Sales" type="submit"><br>
 		</form>
+		<br>
+		<form method="post" action="../Item/ItemList.jsp">
+			<input name="Submit" value="View Current User's Listed Items" type="submit"><br>
+		</form>
+		<br>
+		<form method="post" action="../Item/ListOfItemsToBidOn.jsp">
+			<input name="Submit" value="View Items Up for Sale" type="submit"><br>
+		</form>
+		<br>
 
 		<br>
 		<br>
