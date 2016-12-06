@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../potatoes.css">
-<title>Update Profile</title>
+<title>Item Information</title>
 </head>
 <body style="background-color: #a7adba">
 	<div class="form-style-2">
@@ -16,38 +16,39 @@
 		<% String itemID = request.getParameter("id");
 		
 			try{
+			item.updateTime();
     		ResultSet rs = item.getItemInfoToEdit(itemID); 
     		while (rs.next()) {
 		%>
 
 		
-			<table>
+			<table class="resultTable">
 				<tr>
-					<td>Item ID</td>
+					<th>Item ID</th>
 					<td><%=rs.getString("ITEM_ID")%></td>
 				</tr>
 				<tr>
-					<td>Item Name</td>
+					<th>Item Name</th>
 					<td><%=rs.getString("ITEM_NAME")%></td>
 				</tr>
 				<tr>
-					<td>Category</td>
+					<th>Category</th>
 					<td><%=rs.getString("ITEM_CATEGORY")%></td>
 				</tr>
 				<tr>
-					<td>Start Price</td>
+					<th>Start Price</th>
 					<td><%=rs.getString("START_PRICE")%></td>
 				</tr>
 				<tr>
-					<td>Auction Starts</td>
+					<th>Auction Starts</th>
 					<td><%=rs.getString("START_DATE")%></td>
 				</tr>
 				<tr>
-					<td>Auction Ends</td>
+					<th>Auction Ends</th>
 					<td><%=rs.getString("END_DATE")%></td>
 				</tr>
 				<tr>
-					<td>Description</td>
+					<th>Description</th>
 					<td><%=rs.getString("DESCRIPTION")%></td>
 				</tr>
 
@@ -62,13 +63,11 @@
 			}
 		%>
 		
-			
+			<br>
 			<!-- Return to previous menu button -->
 			<form method="post" action="ListOfItemsToBidOn.jsp">
 				<input name="Submit" value="Return to Item List" type="submit"><br>
 			</form>
-			<br>
-			<br>
 			<!-- Return to previous menu button -->
 			<form method="post" action="../Login_action.jsp">
 				<input name="Submit" value="Return to Menu" type="submit"><br>

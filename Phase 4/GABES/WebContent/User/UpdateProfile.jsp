@@ -49,7 +49,7 @@
     	catch(IllegalStateException ise){
         	out.println(ise.getMessage());
     	}%>
-
+			<br>
 			<!-- Update Profile Button -->
 			<form method="post" action="Update_Action.jsp">
 				<input name="Submit" value="Update" type="submit"><br>

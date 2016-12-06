@@ -104,6 +104,8 @@ Insert Into GABES_USER VALUES
   (new_user_seq.NEXTVAL, 'jrSmith', 'jrSmith@cavs.com', 'goCavs', '9521234567', 'JR', 'Smith', 0, 'gkboyer', 1, 1);
 Insert Into GABES_USER VALUES
   (new_user_seq.NEXTVAL, 'lJames', 'LeBron-J@yahoo.com', 'FlopAllDay', '6519842681', 'LeBron', 'James', 0, 'gkboyer', 1, 1);
+Insert Into GABES_USER VALUES
+  (new_user_seq.NEXTVAL, 'test', 'test@yahoo.com', 'test', '1234567891', 'test', 'tester', 1, 'kaolson', 1, 1);
 
 
 
@@ -112,28 +114,28 @@ Insert Into GABES_USER VALUES
 -- Item(Item ID, Category, Sold?, Selling Price (Final Bid), Description, Commission, Name, Current Bid, Start Price, Start Date, End Date, Seller ID, Winner_ID)
 
 Insert Into GABES_ITEM VALUES
-  (new_item_seq.NEXTVAL, 'Books', 1, 20.00, 'Book for Computer Science class', 5.00, 'Database Systems', 20.00, 15.00, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00002, 00008);
+  (new_item_seq.NEXTVAL, 'Books', 1, 20.00, 'Book for Computer Science class', 1, 'Database Systems', 20.00, 15.00, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00002, 00008);
 
 Insert Into GABES_ITEM VALUES
-  (new_item_seq.NEXTVAL, 'Cooking', 1, 25.00, 'Frying pan for cooking', 3.00, 'Non-Stick Skillet', 25.00, 17.99,  CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00002, 00007);
+  (new_item_seq.NEXTVAL, 'Cooking', 1, 25.00, 'Frying pan for cooking', 1.25, 'Non-Stick Skillet', 25.00, 17.99,  CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00002, 00007);
 
 Insert Into GABES_ITEM VALUES
-  (new_item_seq.NEXTVAL, 'Movies', 0, NULL, '2016 Disney-Pixar Film', NULL, 'Finding Dory', NULL, 19.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-11-14 22:05:00', 'YYYY-MM-DD HH24:MI:SS'), 00001, NULL);
+  (new_item_seq.NEXTVAL, 'Movies', 0, NULL, '2016 Disney-Pixar Film', NULL, 'Finding Dory', NULL, 19.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-15 22:05:00', 'YYYY-MM-DD HH24:MI:SS'), 00001, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (new_item_seq.NEXTVAL, 'Books', 0, NULL, 'NY Times Bestseller!', NULL, 'The Da Vinci Code', NULL, 18.00, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00002, NULL);
+  (new_item_seq.NEXTVAL, 'Books', 1, 17.00, 'NY Times Bestseller!', 0.85, 'The Da Vinci Code', 17.00, 13.00, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00004, 00002);
 
 Insert Into GABES_ITEM VALUES
   (new_item_seq.NEXTVAL, 'Books', 0, NULL, 'Biography by Walter Issacson', NULL, 'Steve Jobs', NULL, 21.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00006, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (new_item_seq.NEXTVAL, 'Movies', 0, NULL, 'The second Avengers Movie', NULL, 'Avengers: Age of Ultron', NULL, 19.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00004, NULL);
+  (new_item_seq.NEXTVAL, 'Movies', 1, 22.00, 'The second Avengers Movie', 1.10, 'Avengers: Age of Ultron', 22.00, 19.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00004, 00008);
 
 Insert Into GABES_ITEM VALUES
   (new_item_seq.NEXTVAL, 'Electronics', 0, NULL, 'Also doubles as a fire starter', NULL, 'Samsung Note 7', NULL, 199.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00007, NULL);
 
 Insert Into GABES_ITEM VALUES
-  (new_item_seq.NEXTVAL, 'Merchandise', 0, NULL, 'Authentic Steph Curry Jersey', NULL, 'Curry #30 Jersey', NULL, 64.95, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00003, NULL);
+  (new_item_seq.NEXTVAL, 'Merchandise',1, 5000.00, 'Signed, Authentic Steph Curry Jersey', 250.00, 'Curry #30 Jersey', 5000.00, 64.95, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00003, 00008);
 
 Insert Into GABES_ITEM VALUES
   (new_item_seq.NEXTVAL, 'Clothing', 0, NULL, 'The North Face ultra-warm winter jacket', NULL, 'North Face Jacket', NULL, 149.99, CURRENT_TIMESTAMP, TO_TIMESTAMP('2016-12-25 06:15:00', 'YYYY-MM-DD HH24:MI:SS'), 00004, NULL);
@@ -142,21 +144,30 @@ Insert Into GABES_ITEM VALUES
 -- Insertions for the GABES_FEEDBACK table
 -- Feedback(Item ID, Item Quality, Delivery, Overall Rating, Comments)
 Insert Into GABES_FEEDBACK VALUES
-  (2, 4, 5, 4, 'Decent pan, does not cook evenly though.');
+  (1, 4, 5, 4, 'Ehh, pretty boring book');
 Insert Into GABES_FEEDBACK VALUES
-  (3, 9, 5, 8, 'Excellent movie - delivery was late though');
+  (2, 7, 3, 5, 'Decent pan for the price, but took too long to deliver');
 Insert Into GABES_FEEDBACK VALUES
-  (7, 1, 1, 1, 'Sucks.  It started on fire. ');
+  (4, 8, 10, 9, 'Pretty great book and delivered fast!');
 Insert Into GABES_FEEDBACK VALUES
-  (9, 10, 10, 10, '');
+  (6, 10, 10, 10, 'Dope.');
 Insert Into GABES_FEEDBACK VALUES
-  (6, 8, 3, 7, 'Pretty good movie - slow to deliver though');
+  (9, 10, 10, 10, 'Low-key my favorite player!');
 
 
 -- Insertions for the GABES_BIDS table
--- Bids(Item ID, Bid ID, Bidding_Time, Time of Bid, Max Bid)
+-- Bids(Item ID, Bidder ID, Time of Bid, Max Bid)
 Insert Into GABES_BIDS VALUES
   (1, 000008, CURRENT_TIMESTAMP, 20.00);
 Insert Into GABES_BIDS VALUES
   (2, 000007, CURRENT_TIMESTAMP, 25.00);
+Insert Into GABES_BIDS VALUES
+  (4, 000001, CURRENT_TIMESTAMP, 15.00);
+Insert Into GABES_BIDS VALUES
+  (4, 000002, CURRENT_TIMESTAMP, 17.00);
+Insert Into GABES_BIDS VALUES
+  (6, 000008, CURRENT_TIMESTAMP, 22.00);
+Insert Into GABES_BIDS VALUES
+  (8, 00009, CURRENT_TIMESTAMP, 5000.00);
+
 

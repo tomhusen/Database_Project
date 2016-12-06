@@ -15,7 +15,7 @@
 		
 		<form method="GET" action="AddNewItem_Action.jsp">
 		
-<table cellpadding="7">
+<table class="inputTable">
 			<tr>
 				<td>Item Name</td>
 				<td><input name="n_itemName" MaxLength=30 value=""></td>
@@ -46,6 +46,7 @@
 		
 		
 		</table>
+		<br>
 
 			<!-- Add User Button -->
 			<form method="post" action="AddNewItem_Action.jsp">

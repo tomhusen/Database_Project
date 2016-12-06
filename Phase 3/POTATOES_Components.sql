@@ -216,9 +216,9 @@ create or replace Procedure Edit_Item_Name(p_userId IN int, p_itemID IN int, p_n
 -- *********************************************************
 -- Inserts a new 'bid' into the bids table. The primary key is a combination 
 -- of the Item_ID, Bidder_ID, and Timestamp of when the bid was placed
-  CREATE OR REPLACE PROCEDURE GABES_NEW_BID(new_itemID CHAR, new_bidderID CHAR, new_maxLimit DECIMAL) AS
+  CREATE OR REPLACE PROCEDURE GABES_NEW_BID(new_itemID CHAR, new_bidderID CHAR, new_maxLimit VARCHAR2) AS
   BEGIN
-    INSERT INTO GABES_BIDS VALUES (new_itemID, new_bidderID, CURRENT_TIMESTAMP, new_maxLimit);
+    INSERT INTO GABES_BIDS VALUES (new_itemID, new_bidderID, CURRENT_TIMESTAMP, TO_NUMBER(new_maxLimit));
   END;
 /
 --Views
@@ -323,12 +323,12 @@ CREATE OR REPLACE TRIGGER GABES_AUCTION_ENDED
 
 
 -- Trigger that updates that current bid to the new max bit when a bid is placed
-CREATE OR REPLACE TRIGGER GABES_BID_TRIGGER
+create or replace TRIGGER GABES_BID_TRIGGER
   AFTER INSERT ON GABES_BIDS
   FOR EACH ROW
   BEGIN
     UPDATE GABES_ITEM
-    SET CURRENT_BID = :NEW.MAX_BID
+    SET CURRENT_BID = :NEW.MAX_BID, WINNER_ID = :NEW.BIDDER_ID
     WHERE GABES_ITEM.ITEM_ID =:NEW.ITEM_ID;
   End;
 

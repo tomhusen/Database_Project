@@ -15,47 +15,47 @@
 
 		<form method="GET" action="AddUser_Action.jsp">
 
-<table cellpadding="7">
+<table class="inputTable">
 				<tr>
-					<td>Username</td>
+					<th>Username</th>
 					<td><input name="n_username" MaxLength="15" value=""></td>
 				</tr>
 				<tr>
-					<td>Email Address</td>
+					<th>Email Address</th>
 					<td><input name="n_email" MaxLength="30" value=""></td>
 				</tr>
 				<tr>
-					<td>Password</td>
+					<th>Password</th>
 					<td><input name="n_password" MaxLength="15" value=""></td>
 				</tr>
 				<tr>
-					<td>Phone Number</td>
+					<th>Phone Number</th>
 					<td><input name="n_phone" MaxLength="10" value=""></td>
 				</tr>
 				<tr>
-					<td>First Name</td>
+					<th>First Name</th>
 					<td><input name="n_first" MaxLength="12" value=""></td>
 				</tr>
 				<tr>
-					<td>Last Name</td>
+					<th>Last Name</th>
 					<td><input name="n_last" MaxLength="12" value=""></td>
 				</tr>
 				<tr>
-					<td>User Type</td>
+					<th>User Type</th>
 					<td><select name="n_admin">
 							<option value="1">Admin</option>
 							<option value="0">Regular</option>
 					</select></td>
 				</tr>
 				<tr>
-					<td>Is Seller?</td>
+					<th>Is Seller?</th>
 					<td><select name="n_seller">
 							<option value="1">Yes</option>
 							<option value="0">No</option>
 					</select></td>
 				</tr>
 				<tr>
-					<td>Is Buyer?</td>
+					<th>Is Buyer?</th>
 					<td><select name="n_buyer">
 							<option value="1">Yes</option>
 							<option value="0">No</option>

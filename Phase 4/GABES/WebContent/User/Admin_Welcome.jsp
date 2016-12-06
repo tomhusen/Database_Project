@@ -9,50 +9,47 @@
 <title>Welcome!</title>
 </head>
 <body style="background-color: #a7adba">
-
 	<div class="form-style-2">
-		<!-- Heading at top of the page -->
-		<div class="form-style-2-heading">
-			Welcome
-			<%=user.getUsername()%></div>
-
-		<form method="post" action="UpdateProfile.jsp">
-			<input name="Submit" value="Update My Profile" type="submit"><br>
-		</form>
+		<ul>
+			<li><a class="active" href="../Login_action.jsp">Home</a></li>
+			<li class="dropdown"><a href="javascript:void(0)"
+				class="dropbtn">My Profile</a>
+				<div class="dropdown-content">
+					<a href="UpdateProfile.jsp">Update My Profile</a> <a
+						href="ViewMyFeedback.jsp">View My Feedback</a>
+				</div></li>
+			<!-- Items Menu -->
+			<li class="dropdown"><a href="javascript:void(0)"
+				class="dropbtn">Search</a>
+				<div class="dropdown-content">
+					<a href="../Item/Search.html">Search</a> <a
+						href="../Item/ListOfItemsToBidOn.jsp">View All Listed Items</a>
+				</div></li>
+			<!-- Manage Sales Menu -->
+			<li class="dropdown"><a href="javascript:void(0)"
+				class="dropbtn">Manage My Sales</a>
+				<div class="dropdown-content">
+					<a href="../Item/ItemList.jsp">View My Listed Items</a> <a
+						href="../Item/AddNewItem.jsp">List New Item</a>
+				</div></li>
+			<!-- Admin Dropdown Menu -->
+			<li class="dropdown"><a href="javascript:void(0)"
+				class="dropbtn">Admin Options</a>
+				<div class="dropdown-content">
+					<a href="AddNewUser.jsp">Add New User</a> <a
+						href="AdminCommissionReport.jsp">View Commission Report</a> <a
+						href="SalesSummary.jsp">View Sales Summary</a>
+				</div></li>
+			<li style="float: right"><a class="active"
+				href="../Logout_action.jsp">Logout</a></li>
+		</ul>
 		<br>
-
-		<form method="post" action=SellingManagement.html>
-			<input name="Submit" value="Manage My Sales" type="submit"><br>
-		</form>
-		<br>
-		<form method="post" action="../Item/Search.html">
-			<input name="Submit" value="Search for Items" type="submit"><br>
-		</form>
-		<br>
-		<form method="post" action="../Item/ListOfItemsToBidOn.jsp">
-			<input name="Submit" value="View All Items For Sale" type="submit"><br>
-		</form>
-		<br>
-		<form method="post" action="ViewMyFeedback.jsp">
-			<input name="Submit" value="View My Feedback" type="submit"><br>
-		</form>
-		<br> <br>
-		<h4>Admin Options:</h4>
-		<form method="post" action="AddNewUser.jsp">
-			<input name="Submit" value="Add a New User" type="submit"><br>
-		</form>
-		<br>
-		<form method="post" action="AdminCommissionReport.jsp">
-			<input name="Submit" value="View Commission Report" type="submit"><br>
-		</form>
-		<br>
-		<form method="post" action="SalesSummary.jsp">
-			<input name="Submit" value="View Sales Summary" type="submit"><br>
-		</form>
-		<br> <br> <br> <br> <br>
-		<form method="post" action="../Logout_action.jsp">
-			<input name="Submit" value="Logout" type="submit"><br>
-		</form>
+		<center>
+			<h3>
+				Welcome
+				<%=user.getUsername()%>
+			</h3>
+		</center>
 	</div>
 </body>
 </html>

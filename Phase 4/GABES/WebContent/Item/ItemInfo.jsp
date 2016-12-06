@@ -18,6 +18,7 @@
 		<% String itemID = request.getParameter("id");
 		
 			try{
+				item1.updateTime();
 	    		ResultSet rs = item1.getItemInfoToEdit(itemID); 
     		while (rs.next()) {
 		%>

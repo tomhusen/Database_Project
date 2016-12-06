@@ -1,75 +1,62 @@
-
 <html>
 <head>
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
 <link rel="stylesheet" type="text/css" href="../potatoes.css">
 <title>My Feedback</title>
 </head>
-<body style="background-color:#a7adba">
-<%@ page language="java" import="java.sql.*" %>
-<jsp:useBean id="user" class="GABES.User" scope="session" />
-<jsp:useBean id="feedback" class="GABES.Feedback" scope="session"/>
+<body class="form-style-2-body">
+	<div class="form-style-2">
+		<%@ page language="java" import="java.sql.*"%>
+		<jsp:useBean id="user" class="GABES.User" scope="session" />
+		<jsp:useBean id="feedback" class="GABES.Feedback" scope="session" />
+		<div class="form-style-2-heading">
+			Feedback for
+			<%=user.getUsername()%></div>
+		<table>
+			<tbody>
+				<!-- Table Headers -->
+				<tr>
+					<th>Rater Username</th>
+					<th>Item Number</th>
+					<th>Overall Rating</th>
+					<th>Item Quality</th>
+					<th>Delivery</th>
+					<th>Comments</th>
+				</tr>
 
+				<%
+					try {
+						ResultSet rs = feedback.getFeedbackInfoWithRater(user.getUserID());
 
-<table cellpadding="7" border="1">
-  <tbody>
-    <tr>
-      	<td style="vertical-align: top;">Rater Username<br> 
-      	</td>
-      	<td style="vertical-align: top;">Item Number<br>
-      	</td>
-     	 <td style="vertical-align:top;">Overall Rating<br>
-      	</td>
-      	<td style="vertical-align: top;">Item Quality<br>
-      	</td>
-      	<td style="vertical-align: top;">Delivery<br>
-      	</td>
-      	<td style="vertical-align: top;">Comments<br>
-      	</td>
-      	
-   </tr>
+						while (rs.next()) {
+				%>
+				<!-- Populates Table with Data -->
+				<tr>
+					<td><%=rs.getString("WINNER_ID")%></td>
+					<td><%=rs.getString("ITEM_ID")%></td>
+					<td><%=rs.getString("ITEM_QUALITY")%></td>
+					<td><%=rs.getString("DELIVERY")%></td>
+					<td><%=rs.getString("OVERALL_RATING")%></td>
+					<td><%=rs.getString("COMMENTS")%></td>
+				</tr>
 
-    <% 
-    System.out.println(user.getUserID());
-    try{
-        ResultSet rs = feedback.getFeedbackInfoWithRater(user.getUserID());
+				<%
+					}
+						rs.close();
+					}
 
-    while (rs.next()) {
-	%>
-	<tr>
-     	<td style="vertical-align: top; text-align:center;" contenteditable='false'>
-     		<%=rs.getString("WINNER_ID")%><br>
-     	</td>
-     	<td style="vertical-align: top; text-align:center;" contenteditable='false'>
-     		<%=rs.getString("ITEM_ID")%><br>
-     	</td>
-     	<td style="vertical-align: top; text-align:center;" contenteditable='false'>
-     		<%=rs.getString("OVERALL_RATING")%><br>
-     	</td>
-     	<td style="vertical-align: top; text-align:center;" contenteditable='false'>
-     		<%=rs.getString("ITEM_QUALITY")%><br>
-     	</td>
-     	<td style="vertical-align: top; text-align:center;" contenteditable='false'>
-     		<%=rs.getString("COMMENTS")%><br>
-     	</td>
-     	
-    </tr>
-    <%} rs.close();}
+					catch (IllegalStateException ise) {
+						out.println(ise.getMessage());
+					}
+				%>
 
-    catch(IllegalStateException ise){
-        out.println(ise.getMessage());
-    }
-
-	%>
-
-    
-    
-  </tbody>
-</table>
-			<!-- Return to previous menu button -->
-			<form method="post" action="../Login_action.jsp">
-				<input name="Submit" value="Return to Menu" type="submit"><br>
-			</form>
-
+			</tbody>
+		</table>
+		<br>
+		<!-- Return to Homepage -->
+		<form method="post" action="../Login_action.jsp">
+			<input name="Submit" value="Return to Menu" type="submit"><br>
+		</form>
+	</div>
 </body>
 </html>

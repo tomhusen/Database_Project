@@ -295,6 +295,22 @@ public class Item implements Serializable {
 	}
 	
 	/**
+	 * Method: getAllItemsForSalesSummary()
+	 * 
+	 * The purpose of this function is to get all items a user can bid on
+	 * 
+	 * @throws IllegalStateException
+	 *             if then method is called when loggedIn = false
+	 */
+	public ResultSet getAllItemsForSalesSummary() throws IllegalStateException, SQLException {
+		Connection con = openDBConnection();
+		Statement stmt = con.createStatement();
+		String queryString = "Select ITEM_ID,ITEM_NAME,ITEM_CATEGORY,SELLING_PRICE,COMMISSION_FEE From team1.GABES_ITEM Where STATUS=1 ORDER BY ITEM_CATEGORY";
+		ResultSet result = stmt.executeQuery(queryString);
+		return result;
+	}
+	
+	/**
 	 * Method: getItemInfo(String itemId)
 	 * 
 	 * The purpose of this method is to use the connection to our Oracle Database
@@ -306,7 +322,6 @@ public class Item implements Serializable {
 	public ResultSet getItemInfoToEdit(String itemID) throws SQLException {
 		Connection con = openDBConnection();
 		Statement stmt = con.createStatement();
-		/** Proceeds if user is logged in */
 		String queryString = "Select * From team1.GABES_ITEM i Where i.ITEM_ID=" + itemID + "";
 		ResultSet result = stmt.executeQuery(queryString);
 		return result;
@@ -335,24 +350,53 @@ public class Item implements Serializable {
 	}
 	
 	public ResultSet search(String s_itemID, String keyword, String category, String minBid, String maxBid, String endDate) throws SQLException {
-		// ResultSet rs = getAllItems();
-		Connection con = openDBConnection();
-		if(s_itemID == null) s_itemID="%";
-		if(keyword == null) keyword="%";
-		if(category == null) category="%";
-		if(minBid == null | minBid == "Min Bid") minBid="0.0";
-		if(maxBid == null | maxBid == "Max Bid") maxBid="99999.99";
-		if(endDate == null | endDate == "YYYY-MM-DD") endDate="9999-12-31";
+
+		/** Maybe manually add the '% %' for the LIKE to the different strings
+		 *  ex. String new_itemID = "'%"+s_itemID+"%'";
+		 */
 		
-		String queryString = "Select ITEM_ID,ITEM_NAME,ITEM_CATEGORY,START_DATE,END_DATE,START_PRICE, CURRENT_BID, STATUS "
-				+ "From team1.GABES_ITEM i"
-				+ "Where i.ITEM_ID LIKE ? AND i.ITEM_NAME LIKE ? AND i.CATEGORY LIKE ?";
+		Connection con = openDBConnection();
+		if(s_itemID == "-") s_itemID="";
+		if(keyword == "-") keyword="";
+		if(category == "-") category="";
+		if(minBid == "-") minBid="0.0";
+		if(maxBid == "-") maxBid="99999.99";
+		if(endDate == "-" | endDate == "YYYY-MM-DD") endDate="9999-12-31";
+		
+		String queryString = "Select i.ITEM_ID, i.ITEM_NAME, i.ITEM_CATEGORY, i.START_DATE, i.END_DATE, i.START_PRICE, i.CURRENT_BID, i.STATUS ";
+		queryString +="From team1.GABES_ITEM i ";
+		
+		queryString +="Where i.ITEM_ID='" + s_itemID + "' AND i.ITEM_NAME='" + keyword + "' AND i.ITEM_CATEGORY='" + category + "'";
+		
+		// Theoretically Done
+		queryString +="AND ((i.CURRENT_BID>? AND i.CURRENT_BID<?) OR (i.CURRENT_BID=Null AND i.START_PRICE<?))";
+		queryString +="AND i.END_DATE < TO_TIMESTAMP('"+endDate+" 23:59:59', 'YYYY-MM-DD HH24:MI:SS')";
+		
 		PreparedStatement p_stmt = con.prepareStatement(queryString);
 		p_stmt.clearParameters();
-		p_stmt.setString(1, s_itemID);
-		p_stmt.setString(2, keyword);
-		p_stmt.setString(3, category);
+		p_stmt.setString(1, minBid);
+		p_stmt.setString(2, maxBid);
+		p_stmt.setString(3, maxBid);
+		System.out.println("Item ID Searched: " + s_itemID);
+		System.out.println("Item Keyword Searched: " + keyword);
+		System.out.println("Item Category Searched: " + category);
+		System.out.println("Min Bid Searched: " + minBid);
+		System.out.println("Max Bid Searched: " + maxBid);
+		System.out.println("End Date Searched: " + endDate);
 		ResultSet result = p_stmt.executeQuery();
 		return result;
+	}
+	
+	/**
+	 * Method: updateTime()
+	 * 
+	 * This method calls the prepared statement in our Database that is responsible
+	 * for updating items based on if they're sold, past sell date, etc.
+	 */
+	public void updateTime() throws SQLException {
+		Connection con = openDBConnection();
+		CallableStatement callStmt = con.prepareCall(" {call team1.GABES_CHECK_TIME()}");
+		callStmt.execute();
+		callStmt.close();
 	}
 }

@@ -16,7 +16,7 @@ import java.sql.Statement;
  * @author Team Potatoes (Grant Boyer, Kyle Olson, Thomas Husen)
  */
 @SuppressWarnings("serial")
-public class Feedback {
+public class Feedback implements Serializable{
 
 	/**
 	 * The following variables correspond to fields in the GABES_FEEDBACK database

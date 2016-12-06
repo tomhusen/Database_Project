@@ -5,92 +5,120 @@
 <title>Search Results</title>
 </head>
 <%@ page language="java" import="java.sql.*"%>
-<jsp:useBean id="item" class="GABES.Item" scope="page" />
+<jsp:useBean id="item" class="GABES.Item" scope="page"/>
 
 <body style="background-color: #a7adba">
-	<div class="form-style-2-heading">Search Results</div>
-	<table style="text-align: left; width: 100%;" border="1"
-		cellpadding="2" cellspacing="2">
-		<tbody>
-			<tr style="background-color: #fc9749">
-				<td style="vertical-align: top;">Item ID<br></td>
-				<td style="vertical-align: top;">Item Name<br></td>
-				<td style="vertical-align: top;">Auction Start Time<br></td>
-				<td style="vertical-align: top;"><br>Auction End Time</td>
-				<td style="vertical-align: top;"><br>Start Price</td>
-				<td style="vertical-align: top;"><br>Current Bid</td>
-				<td style="vertical-align: top;"><br>Status</td>
-				<td style="vertical-align: top;"><br></td>
-				<td style="vertical-align: top;"><br></td>
-			</tr>
-			<%
-				String s_itemID = request.getParameter("s_itemID");
-				String s_keyword = request.getParameter("s_keyword");
-				String s_category = request.getParameter("s_category");
-				String s_lowBid = request.getParameter("s_lowBid");
-				String s_highBid = request.getParameter("s_highBid");
-
-				String s_month = request.getParameter("month");
-				String s_day = request.getParameter("day");
-				String s_year = request.getParameter("year");
-
-				String s_endDate = s_year + "-" + s_month + "-" + s_day;
-
-				try {
-					ResultSet rs = item.search(s_itemID, s_keyword, s_category, s_lowBid, s_highBid, s_endDate);
-					while (rs.next()) {
-			%>
-
-
-			<tr style="background-color: #e9eadd">
-				<td style="vertical-align: top;"><br> <%=rs.getString("ITEM_ID")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getString("ITEM_NAME")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getString("CATEGORY")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getString("START_DATE")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getString("END_DATE")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getString("START_PRICE")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getString("CURRENT_BID")%></td>
-				<td style="vertical-align: top;"><br> <%=rs.getString("STATUS")%></td>
-				<td style="vertical-align: top;">
-					<!-- passes the item number to the item info page (look at transactions example) -->
-					<form method="GET" action="ItemInfo.jsp">
-						<input id="itemID" name="id" value=<%=rs.getString("ITEM_ID")%>
-							type="hidden"><br> <input value="Item Info"
-							type="submit">
-					</form>
-				</td>
-				<!-- passes the user number to the bidder list -->
-				<td style="vertical-align: top;">
-					<form method="GET" action="BidderList.jsp">
-						<input id="transID" name="transNumber"
-							value=<%=rs.getString("ITEM_ID")%> type="hidden"><br>
-						<input value="Bidder List" type="submit">
-					</form>
-				</td>
-			</tr>
-
-			<%
-				}
-					rs.close();
-				}
-
-				catch (IllegalStateException ise) {
-					out.println(ise.getMessage());
-				}
-			%>
-
-		</tbody>
-
-	</table>
-
+	<div class="form-style-2">
+			<ul>
+			<li><a class="active" href="../Login_action.jsp">Home</a></li>
+			<li class="dropdown"><a href="javascript:void(0)"
+				class="dropbtn">My Profile</a>
+				<div class="dropdown-content">
+					<a href="../User/UpdateProfile.jsp">Update My Profile</a> <a
+						href="../User/ViewMyFeedback.jsp">View My Feedback</a>
+				</div></li>
+			<!-- Items Menu -->
+			<li class="dropdown"><a href="javascript:void(0)"
+				class="dropbtn">Search</a>
+				<div class="dropdown-content">
+					<a href="Search.html">Search</a> <a
+						href="ListOfItemsToBidOn.jsp">View All Listed Items</a>
+				</div></li>
+			<!-- Manage Sales Menu -->
+			<li class="dropdown"><a href="javascript:void(0)"
+				class="dropbtn">Manage My Sales</a>
+				<div class="dropdown-content">
+					<a href="ItemList.jsp">View My Listed Items</a> <a
+						href="AddNewItem.jsp">List New Item</a>
+				</div></li>
+			<!-- Admin Dropdown Menu -->
+			<li class="dropdown"><a href="javascript:void(0)"
+				class="dropbtn">Admin Options</a>
+				<div class="dropdown-content">
+					<a href="../User/AddNewUser.jsp">Add New User</a> <a
+						href="../User/AdminCommissionReport.jsp">View Commission Report</a> <a
+						href="../User/SalesSummary.jsp">View Sales Summary</a>
+				</div></li>
+			<li style="float: right"><a class="active"
+				href="../Logout_action.jsp">Logout</a></li>
+		</ul>
 	<br>
-	<br>
+		<div class="form-style-2-heading">Search Results</div>
+		
+		<table class="resultTable">
+			<tbody>
+				<tr>
+					<th>Item ID</th>
+					<th>Item Name</th>
+					<th>Category</th>
+					<th>Auction Start Time</th>
+					<th>Auction End Time</th>
+					<th>Start Price</th>
+					<th>Current Bid</th>
+					<th>Status</th>
+					<th></th>
+					<th></th>
+				</tr>
+				<%
+					String s_itemID = request.getParameter("s_itemID");
+					String s_keyword = request.getParameter("s_keyword");
+					String s_category = request.getParameter("s_category");
+					String s_lowBid = request.getParameter("s_lowBid");
+					String s_highBid = request.getParameter("s_highBid");
+					String s_month = request.getParameter("month");
+					String s_day = request.getParameter("day");
+					String s_year = request.getParameter("year");
+					// Concat into 1 date string
+					String s_endDate = s_year + "-" + s_month + "-" + s_day;
+					try{
+						item.updateTime();
+						ResultSet rs = item.search(s_itemID, s_keyword, s_category, s_lowBid, s_highBid, s_endDate);
+						while (rs.next()) {
+				%>
 
+				<tr>
+					<td><%=rs.getString("ITEM_ID")%></td>
+					<td><%=rs.getString("ITEM_NAME")%></td>
+					<td><%=rs.getString("ITEM_CATEGORY")%></td>
+					<td><%=rs.getTimestamp("START_DATE")%></td>
+					<td><%=rs.getTimestamp("END_DATE")%></td>
+					<td><%=rs.getDouble("START_PRICE")%></td>
+					<td><%=rs.getDouble("CURRENT_BID")%></td>
+					<td><%=rs.getInt("STATUS")%></td>
 
+					<!--  Buttons -->
+					<td>
+						<form method="GET" action="ItemInfo.jsp">
+							<input id="itemID" name="id" value=<%=rs.getString("ITEM_ID")%>
+								type="hidden"><input value="Item Info" type="submit">
+						</form>
+					</td>
+					<!-- passes the user number to the bidder list -->
+					<td>
+						<form method="GET" action="BidderList.jsp">
+							<input id="transID" name="transNumber"
+								value=<%=rs.getString("ITEM_ID")%> type="hidden"> <input
+								value="Bidder List" type="submit">
+						</form>
+					</td>
+				</tr>
 
-	<form method="post" action="../Login_action.jsp">
-		<input name="Submit" value="Back to menu" type="submit"><br>
-	</form>
+				<%
+					}
+						rs.close();
+					}
+
+					catch (IllegalStateException ise) {
+						out.println(ise.getMessage());
+					}
+				%>
+
+			</tbody>
+		</table>
+		<br> <br>
+		<form method="post" action="../Login_action.jsp">
+			<input name="Submit" value="Back to Menu" type="submit"><br>
+		</form>
 	</div>
 </body>
 </html>
