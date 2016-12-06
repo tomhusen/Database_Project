@@ -13,6 +13,21 @@
     font-size: 15px;
     padding-bottom: 3px;
 }
+
+.form-style-3-heading{
+    font-weight: normal;
+    font-style: normal;
+    font-size: 15px;
+    padding-bottom: 3px;
+}
+
+.form-style-4-heading{
+    font-weight: bold;
+    font-style: italic;
+    font-size: 15px;
+    padding-bottom: 3px;
+}
+
 .form-style-2 label{
     display: block;
     margin: 0px 0px 15px 0px;
@@ -66,9 +81,9 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     border: 1px solid #C2C2C2;
-    box-shadow: 1px 1px 4px #EBEBEB;
-    -moz-box-shadow: 1px 1px 4px #EBEBEB;
-    -webkit-box-shadow: 1px 1px 4px #EBEBEB;
+    box-shadow: 1px 1px 4px #DADADA;
+    -moz-box-shadow: 1px 1px 4px #DADADA;
+    -webkit-box-shadow: 1px 1px 4px #DADADA;
     border-radius: 3px;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;

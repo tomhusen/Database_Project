@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.sql.*"%>
-<jsp:useBean id="item" class="GABES.Item" scope="request" />
+<jsp:useBean id="item1" class="GABES.Item" scope="request" />
+<jsp:setProperty name="item1" property="*"/> 
 
 
 <html>
@@ -11,12 +12,13 @@
 <body style="background-color: #a7adba">
 	<div class="form-style-2">
 		<!-- Heading at top of the page -->
-		<div class="form-style-2-heading">Item Information</div>
+		<div class="form-style-2-heading">Item Info -- Change info and
+			click update to to save new values</div>
 
 		<% String itemID = request.getParameter("id");
 		
 			try{
-    		ResultSet rs = item.getItemInfoToEdit(itemID); 
+	    		ResultSet rs = item1.getItemInfoToEdit(itemID); 
     		while (rs.next()) {
 		%>
 
@@ -62,9 +64,9 @@
 			}
 		%>
 		
-			
+			<br>
 			<!-- Return to previous menu button -->
-			<form method="post" action="ListOfItemsToBidOn.jsp">
+			<form method="post" action="ItemListUserHasBidOn.jsp">
 				<input name="Submit" value="Return to Item List" type="submit"><br>
 			</form>
 			<br>

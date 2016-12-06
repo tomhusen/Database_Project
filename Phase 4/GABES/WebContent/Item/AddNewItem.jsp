@@ -26,11 +26,12 @@
 				<td>Starting Price</td>
 				<td><input name="n_startPrice" MaxLength="10" value=""></td>
 			</tr><tr>
-				<td>Start Date</td>
-				<td><input type="time" name="n_startDate"></td>
-			</tr><tr>
 				<td>End Date</td>
-				<td><input type="time" name="n_endDate"></td>
+				<td>
+				
+				
+				
+				</td>
 			</tr><tr>
 				<td>Description</td>
 				<td><input name="n_description" MaxLength="100" value=""></td>

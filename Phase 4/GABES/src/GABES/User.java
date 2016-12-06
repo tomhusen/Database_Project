@@ -191,11 +191,11 @@ public class User implements Serializable {
 		p_stmt.clearParameters();
 		p_stmt.setString(1, this.username);
 		p_stmt.setString(2, this.password);
-		//p_stmt.setString(3, this.user_id);
 		ResultSet result = p_stmt.executeQuery();
 		/** Checks the output of the query, sets loggedIn appropriately */
 		if (result.next() == true) {
 			this.loggedIn = true;
+			this.user_id = result.getString(1);
 		} else {
 			this.loggedIn = false;
 		}

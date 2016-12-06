@@ -1,10 +1,10 @@
 <%@ page language="java" import="java.sql.*"%>
-<jsp:useBean id="item" class= "GABES.Item" scope="session"/> 
-<jsp:setProperty name="item" property="*"/> 
+<jsp:useBean id="item1" class= "GABES.Item" scope="request"/> 
+<jsp:setProperty name="item1" property="*"/> 
 
 <%try{
 	//check item beans attributes...
-	item.editItemInfo();
+	item1.editItemInfo();
 	}	
 	catch(IllegalStateException ise){
 		out.println(ise.getMessage());

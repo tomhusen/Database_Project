@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.sql.*"%>
-<jsp:useBean id="item" class="GABES.Item" scope="session" />
+<jsp:useBean id="item1" class="GABES.Item" scope="request" />
+<jsp:setProperty name="item1" property="*"/> 
 
 
 <html>
@@ -17,7 +18,7 @@
 		<% String itemID = request.getParameter("id");
 		
 			try{
-    		ResultSet rs = item.getItemInfoToEdit(itemID); 
+	    		ResultSet rs = item1.getItemInfoToEdit(itemID); 
     		while (rs.next()) {
 		%>
 
@@ -25,32 +26,32 @@
 			<table>
 				<tr>
 					<td>Item ID</td>
-					<td><input readonly="readonly" name="itemId"
+					<td><input readonly="readonly" name="item_id"
 						value="<%=rs.getString("ITEM_ID")%>"></td>
 				</tr>
 				<tr>
 					<td>Item Name</td>
-					<td><input name="itemName"
+					<td><input name="item_name"
 						value="<%=rs.getString("ITEM_NAME")%>"></td>
 				</tr>
 				<tr>
 					<td>Category</td>
-					<td><input name="categroy"
+					<td><input name="item_category"
 						value="<%=rs.getString("ITEM_CATEGORY")%>"></td>
 				</tr>
 				<tr>
 					<td>Start Price</td>
-					<td><input readonly="startPrice" name="phone" MaxLength="10"
+					<td><input readonly="start_price" name="phone" MaxLength="10"
 						value="<%=rs.getString("START_PRICE")%>"></td>
 				</tr>
 				<tr>
 					<td>Auction Starts</td>
-					<td><input readonly="readonly" name="startDate" MaxLength="12"
+					<td><input readonly="readonly" name="start_date" MaxLength="12"
 						value="<%=rs.getString("START_DATE")%>"></td>
 				</tr>
 				<tr>
 					<td>Auction Ends</td>
-					<td><input name="endDate"
+					<td><input name="end_date"
 						value="<%=rs.getString("END_DATE")%>"></td>
 				</tr>
 				<tr>

@@ -7,13 +7,13 @@
 </head>
 
 <%@ page language="java" import="java.sql.*"%>
-<jsp:useBean id="item" class="GABES.Item" scope="session" />
+<jsp:useBean id="item" class="GABES.Item" scope="page" />
 <jsp:useBean id="user" class="GABES.User" scope="session" />
 
 <body style="background-color: #a7adba">
 	<div class="form-style-2-heading">
 		All of the items sold or currently up for auction by 
-		<%=user.getUsername()%></div>
+		<%=user.getUsername()%>
 	<table style="text-align: left; width: 100%;" border="1"
 		cellpadding="2" cellspacing="2">
 
@@ -33,11 +33,13 @@
 				<td style="vertical-align: top;"><br></td>
 			</tr>
 			<%
-				String userid = "2";//user.getUserID() <-- THIS RETURNS NULL>>> NEED TO ADD THE USER ID TO THE USER SESSION BEAN
-				System.out.println(userid);
+				String userid = user.getUserID(); 
 				try {
 					ResultSet rs = item.getAllItems(userid);
 					while (rs.next()) {
+						try{
+							
+						String check = rs.getString("START_DATE");
 			%>
 
 
@@ -60,7 +62,7 @@
 				<!-- passes the user number to the bidder list -->
 				<td style="vertical-align: top;">
 					<form method="GET" action="BidderList.jsp">
-						<input id="transID" name="transNumber"
+						<input id="itemID" name="id"
 							value=<%=rs.getString("ITEM_ID")%> type="hidden"><br>
 						<input value="Bidder List" type="submit">
 					</form>
@@ -68,7 +70,15 @@
 			</tr>
 
 			<%
+						} catch (java.sql.SQLException sql) {
+							%>
+							<div class="form-style-2-heading">
+		There are currently no items that have been sold or are currently for sale by the current user.
+							<%
 				}
+					}
+					
+				
 					rs.close();
 				}
 
@@ -89,5 +99,6 @@
 	<form method="post" action="../Login_action.jsp">
 		<input name="Submit" value="Back to menu" type="submit"><br>
 	</form>
+	</div>
 </body>
 </html>
