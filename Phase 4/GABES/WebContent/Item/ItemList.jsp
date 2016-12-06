@@ -11,82 +11,48 @@
 <jsp:useBean id="user" class="GABES.User" scope="session" />
 
 <body style="background-color: #a7adba">
-	<div class="form-style-2">	
-	<ul>
-			<li><a class="active" href="../Login_action.jsp">Home</a></li>
-			<li class="dropdown"><a href="javascript:void(0)"
-				class="dropbtn">My Profile</a>
-				<div class="dropdown-content">
-					<a href="UpdateProfile.jsp">Update My Profile</a> <a
-						href="ViewMyFeedback.jsp">View My Feedback</a>
-				</div></li>
-			<!-- Items Menu -->
-			<li class="dropdown"><a href="javascript:void(0)"
-				class="dropbtn">Search</a>
-				<div class="dropdown-content">
-					<a href="../Item/Search.html">Search</a> <a
-						href="../Item/ListOfItemsToBidOn.jsp">View All Listed Items</a>
-				</div></li>
-			<!-- Manage Sales Menu -->
-			<li class="dropdown"><a href="javascript:void(0)"
-				class="dropbtn">Manage My Sales</a>
-				<div class="dropdown-content">
-					<a href="../Item/ItemList.jsp">View My Listed Items</a> <a
-						href="../Item/AddNewItem.jsp">List New Item</a>
-				</div></li>
-				<%
-				if(user.isThisUserAdmin()){
-				%>
-			<!-- Admin Dropdown Menu -->
-			<li class="dropdown"><a href="javascript:void(0)"
-				class="dropbtn">Admin Options</a>
-				<div class="dropdown-content">
-					<a href="AddNewUser.jsp">Add New User</a> <a
-						href="AdminCommissionReport.jsp">View Commission Report</a> <a
-						href="../User/SalesSummary.jsp">View Sales Summary</a>
-				</div></li>
-				<%} %>
-				
-			<li style="float: right"><a class="active"
-				href="../Logout_action.jsp">Logout</a></li>
-		</ul>
 	<div class="form-style-2-heading">
-		<%=user.getUsername()%>'s Listed Items</div>
-	<table class="resultTable">
+		All of the items sold or currently up for auction by 
+		<%=user.getUsername()%>
+	<table style="text-align: left; width: 100%;" border="1"
+		cellpadding="2" cellspacing="2">
 
 
 		<tbody>
 
 
-			<tr>
-				<th>Item ID<br></th>
-				<th>Item Name<br></th>
-				<th>Auction Start Time<br></th>
-				<th>Auction End Time<br></th>
-				<th>Start Price<br></th>
-				<th>Current Bid<br></th>
-				<th>Status<br></th>
-				<th><br></th>
-				<th><br></th>
+			<tr style="background-color: #fc9749">
+				<td style="vertical-align: top;">Item ID<br></td>
+				<td style="vertical-align: top;">Item Name<br></td>
+				<td style="vertical-align: top;">Auction Start Time<br></td>
+				<td style="vertical-align: top;"><br>Auction End Time</td>
+				<td style="vertical-align: top;"><br>Start Price</td>
+				<td style="vertical-align: top;"><br>Current Bid</td>
+				<td style="vertical-align: top;"><br>Status</td>
+				<td style="vertical-align: top;"><br></td>
+				<td style="vertical-align: top;"><br></td>
 			</tr>
 			<%
-
+				String userid = user.getUserID(); 
 				try {
 					item.updateTime();
-					ResultSet rs = item.getAllItems(user.getUserID());
+					ResultSet rs = item.getAllItems(userid);
 					while (rs.next()) {
+						try{
+							
+						String check = rs.getString("START_DATE");
 			%>
 
 
-			<tr>
-				<td><%=rs.getString("ITEM_ID")%></td>
-				<td><%=rs.getString("ITEM_NAME")%></td>
-				<td><%=rs.getTimestamp("START_DATE")%></td>
-				<td><%=rs.getTimestamp("END_DATE")%></td>
-				<td><%=rs.getDouble("START_PRICE")%></td>
-				<td><%=rs.getDouble("CURRENT_BID")%></td>
-				<td><%=rs.getInt("STATUS")%></td>
-				<td>
+			<tr style="background-color: #e9eadd">
+				<td style="vertical-align: top;"><br> <%=rs.getString("ITEM_ID")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getString("ITEM_NAME")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getDate("START_DATE")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getDate("END_DATE")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getDouble("START_PRICE")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getDouble("CURRENT_BID")%></td>
+				<td style="vertical-align: top;"><br> <%=rs.getInt("STATUS")%></td>
+				<td style="vertical-align: top;">
 					<!-- passes the item number to the item info page (look at transactions example) -->
 					<form method="GET" action="ItemInfo.jsp">
 						<input id="itemID" name="id"
@@ -97,7 +63,7 @@
 				<!-- passes the user number to the bidder list -->
 				<td style="vertical-align: top;">
 					<form method="GET" action="BidderList.jsp">
-						<input id="transID" name="transNumber"
+						<input id="itemID" name="id"
 							value=<%=rs.getString("ITEM_ID")%> type="hidden"><br>
 						<input value="Bidder List" type="submit">
 					</form>
@@ -105,7 +71,15 @@
 			</tr>
 
 			<%
+						} catch (java.sql.SQLException sql) {
+							%>
+							<div class="form-style-2-heading">
+		There are currently no items that have been sold or are currently for sale by the current user.
+							<%
 				}
+					}
+					
+				
 					rs.close();
 				}
 

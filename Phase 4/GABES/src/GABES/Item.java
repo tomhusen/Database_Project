@@ -295,6 +295,27 @@ public class Item implements Serializable {
 	}
 	
 	/**
+	 * Method: getAllItems(String userId)
+	 * 
+	 * The purpose of this function is to get all items a user can bid on
+	 * 
+	 * @throws IllegalStateException
+	 *             if then method is called when loggedIn = false
+	 */
+	public ResultSet getAllItemsForSale() throws IllegalStateException, SQLException {
+		// CHECK THE END DATE SO YOU DONT HAVE ITEMS LISTED THAT HAVE PAST THEIR
+		// END DATE
+		/* Opens Connection and creates a new Statement */
+		Connection con = openDBConnection();
+		Statement stmt = con.createStatement();
+		String queryString = "Select ITEM_ID,ITEM_NAME,ITEM_CATEGORY,START_DATE,END_DATE,START_PRICE,CURRENT_BID From team1.GABES_ITEM WHERE STATUS != 1 ";
+		// queryString += "Where GETDATE() < END_DATE";
+		ResultSet result = stmt.executeQuery(queryString);
+
+		return result;
+	}
+	
+	/**
 	 * Method: getAllItemsForSalesSummary()
 	 * 
 	 * The purpose of this function is to get all items a user can bid on
@@ -347,6 +368,32 @@ public class Item implements Serializable {
 		/* Executes the Prepared Statement query */
 		p_stmt.executeQuery();
 		p_stmt.close();
+	}
+	
+	/**
+	 * Method: getItemName(String itemId)
+	 * 
+	 * The purpose of this function is to get the name of an item to display along with the item id when a user places a bid
+	 * 
+	 */
+	public ResultSet getItemName(String itemId) throws SQLException {
+		Connection con = openDBConnection();
+		Statement stmt = con.createStatement();
+		String check ="";
+		String queryString = "Select CURRENT_BID From team1.GABES_ITEM i Where i.ITEM_ID=" + itemId + "";
+		ResultSet result = stmt.executeQuery(queryString);
+		while (result.next()) {
+		check = result.getString("CURRENT_BID");
+		}
+		if(check == "0" || check == null){
+			String queryString2 = "Select ITEM_ID, ITEM_NAME, START_PRICE From team1.GABES_ITEM i Where i.ITEM_ID=" + itemId + "";
+			ResultSet result2 = stmt.executeQuery(queryString2);
+			return result2;
+		}else{		
+		String queryString3 = "Select ITEM_ID, ITEM_NAME, CURRENT_BID From team1.GABES_ITEM i Where i.ITEM_ID=" + itemId + "";
+		ResultSet result3 = stmt.executeQuery(queryString3);
+		return result3;
+		}
 	}
 	
 	public ResultSet search(String s_itemID, String keyword, String category, String minBid, String maxBid, String endDate) throws SQLException {
