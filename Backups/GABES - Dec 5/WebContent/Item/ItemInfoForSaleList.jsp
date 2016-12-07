@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../potatoes.css">
-<title>Item Information</title>
+<title>Update Profile</title>
 </head>
 <body style="background-color: #a7adba">
 	<div class="form-style-2">
@@ -22,33 +22,33 @@
 		%>
 
 		
-			<table class="resultTable">
+			<table>
 				<tr>
-					<th>Item ID</th>
+					<td>Item ID</td>
 					<td><%=rs.getString("ITEM_ID")%></td>
 				</tr>
 				<tr>
-					<th>Item Name</th>
+					<td>Item Name</td>
 					<td><%=rs.getString("ITEM_NAME")%></td>
 				</tr>
 				<tr>
-					<th>Category</th>
+					<td>Category</td>
 					<td><%=rs.getString("ITEM_CATEGORY")%></td>
 				</tr>
 				<tr>
-					<th>Start Price</th>
+					<td>Start Price</td>
 					<td><%=rs.getString("START_PRICE")%></td>
 				</tr>
 				<tr>
-					<th>Auction Starts</th>
+					<td>Auction Starts</td>
 					<td><%=rs.getString("START_DATE")%></td>
 				</tr>
 				<tr>
-					<th>Auction Ends</th>
+					<td>Auction Ends</td>
 					<td><%=rs.getString("END_DATE")%></td>
 				</tr>
 				<tr>
-					<th>Description</th>
+					<td>Description</td>
 					<td><%=rs.getString("DESCRIPTION")%></td>
 				</tr>
 
@@ -63,11 +63,13 @@
 			}
 		%>
 		
-			<br>
+			
 			<!-- Return to previous menu button -->
 			<form method="post" action="ListOfItemsToBidOn.jsp">
 				<input name="Submit" value="Return to Item List" type="submit"><br>
 			</form>
+			<br>
+			<br>
 			<!-- Return to previous menu button -->
 			<form method="post" action="../Login_action.jsp">
 				<input name="Submit" value="Return to Menu" type="submit"><br>

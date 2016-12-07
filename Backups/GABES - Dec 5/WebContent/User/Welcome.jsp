@@ -40,6 +40,20 @@
 		<form method="post" action="../Logout_action.jsp">
 			<input name="Submit" value="Logout" type="submit"><br>
 		</form>
+		
+				<br>
+		<form method="post" action="../Item/ItemList.jsp">
+			<input name="Submit" value="View Current User's Listed Items" type="submit"><br>
+		</form>
+		<br>
+		<form method="post" action="../Item/ItemListUserHasBidOn.jsp">
+			<input name="Submit" value="View Items You Have Bid On" type="submit"><br>
+		</form>
+		<br>
+		<form method="post" action="../Item/ListOfItemsToBidOn.jsp">
+			<input name="Submit" value="View Items Up for Sale" type="submit"><br>
+		</form>
+		<br>
 	</div>
 </body>
 </html>

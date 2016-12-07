@@ -4,25 +4,6 @@
 ---------------------------------------------------------------------
 ---------------------------------------------------------------------
 
--- DROP THEN CREATE SEQUENCES FOR USER IDS AND ITEM IDS
-DROP SEQUENCE new_user_seq;
-CREATE SEQUENCE new_user_seq
-  MAXVALUE 99999
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
-/
--- *********************************************************
-  
-DROP SEQUENCE new_item_seq;
-CREATE SEQUENCE new_item_seq
-  MAXVALUE 9999999999
-  START WITH 1
-  INCREMENT BY 1
-  NOCACHE
-  NOCYCLE;
-/  
 
 
 --Functions
@@ -156,13 +137,33 @@ create or replace Procedure Update_User_Profile_UserName(p_userId IN int, p_user
 -- *********************************************************
 
 --Procedure that is used to post new items to the Gabes_Item table
-create or replace Procedure Post_Item(p_itemCategory IN VARCHAR2, p_status IN CHAR, p_sellingPrice IN Number, p_description IN VARCHAR2, p_comissionFee IN Number, p_itemName IN VARCHAR2, p_currentBid IN number, p_startPrice IN number, p_startDate IN TIMESTAMP, p_endDate IN TIMESTAMP, p_userID IN CHAR, p_winnerID IN char)
-  IS
-	begin 
-  
-  INSERT INTO GABES_ITEM (ITEM_ID, ITEM_CATEGORY, STATUS, SELLING_PRICE, DESCRIPTION, COMMISSION_FEE, ITEM_NAME, CURRENT_BID, START_PRICE, START_DATE, END_DATE, USER_ID, WINNER_ID) VALUES (NEW_ITEM_SEQ.nextVal, p_itemCategory , p_status, p_sellingPrice, p_description, p_comissionFee, p_itemName , p_currentBid, p_startPrice, p_startDate, p_endDate, p_userID, p_winnerID );
-  
-  END;
+CREATE OR REPLACE PROCEDURE POST_ITEM(
+    p_itemCategory VARCHAR2,
+    p_description VARCHAR2,
+    p_itemName VARCHAR2,
+    p_startPrice VARCHAR2,
+    p_endDate VARCHAR2,
+    p_userID VARCHAR2)
+IS
+BEGIN
+  INSERT
+  INTO GABES_ITEM VALUES
+    (
+      new_item_seq.nextVal,
+      p_itemCategory,
+      0,
+      NULL,
+      p_description,
+      NULL,
+      p_itemName,
+      NULL,
+      TO_NUMBER(p_startPrice),
+      CURRENT_TIMESTAMP,
+      TO_TIMESTAMP(p_endDate, 'YYYY-MM-DD HH24:MI:SS'),
+      p_userID,
+      NULL
+    );
+END;
 /
 -- *********************************************************
 

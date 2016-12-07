@@ -50,6 +50,20 @@
 				<%=user.getUsername()%>
 			</h3>
 		</center>
+		
+		 		<br>
+				<form method="post" action="../Item/ItemList.jsp">
+			<input name="Submit" value="View Current User's Listed Items" type="submit"><br>
+		</form>
+		<br>
+		<form method="post" action="../Item/ItemListUserHasBidOn.jsp">
+			<input name="Submit" value="View Items You Have Bid On" type="submit"><br>
+		</form>
+		<br>
+		<form method="post" action="../Item/ListOfItemsToBidOn.jsp">
+			<input name="Submit" value="View Items Up for Sale" type="submit"><br>
+		</form>
+		<br> <br> <br> <br>
 	</div>
 </body>
 </html>
