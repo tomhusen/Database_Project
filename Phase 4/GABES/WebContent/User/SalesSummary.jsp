@@ -52,7 +52,7 @@
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
 		<br>
-		<table>
+		<table class="resultTable">
 			<tbody>
 				<tr>
 					<th>Category</th>

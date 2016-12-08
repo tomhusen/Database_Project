@@ -36,7 +36,7 @@
 						href="../Item/ItemList.jsp">View My Listed Items</a>
 				</div></li>
 			<%
-			if (user.isThisUserAdmin()) {
+				if (user.isThisUserAdmin()) {
 			%>
 			<!-- Admin Dropdown Menu -->
 			<li class="dropdown"><a href="javascript:void(0)"
@@ -69,35 +69,46 @@
 			%>
 			<table>
 				<tr>
-					<td>Item ID</td>
-					<td> <input name="n_itemId" value="<%=rs.getString("ITEM_ID")%>" type="hidden"><%=rs.getString("ITEM_ID")%></td>
+					<th>Item ID</th>
+					<td><input name="n_itemId"
+						value="<%=rs.getString("ITEM_ID")%>" type="hidden"><%=rs.getString("ITEM_ID")%></td>
 				</tr>
 				<tr>
-					<td>Item Name</td>
-					<td ><%=rs.getString("ITEM_NAME")%></td>
+					<th>Item Name</th>
+					<td><%=rs.getString("ITEM_NAME")%></td>
 				</tr>
 				<tr>
-					<td>Overall Rating</td>
+					<th>Overall Rating</th>
 					<td><input type="number" name="n_overallRating" min="0"
 						max="10" step="1" value="1"></td>
 				</tr>
 				<tr>
-					<td>Item Quality</td>
+					<th>Item Quality</th>
 					<td><input type="radio" name="n_itemQuality" value="1"
-						checked="checked" />1
-						<input type="radio" name="n_itemQuality" value="2">2
-					<input type="radio" name="n_itemQuality" value="3">3
-					<input type="radio" name="n_itemQuality" value="4">4
-					<input type="radio" name="n_itemQuality" value="5">5</td>
+						checked="checked" />1 <input type="radio" name="n_itemQuality"
+						value="2">2 <input type="radio" name="n_itemQuality"
+						value="3">3 <input type="radio" name="n_itemQuality"
+						value="4">4 <input type="radio" name="n_itemQuality"
+						value="5">5 <input type="radio" name="n_itemQuality"
+						value="2">6 <input type="radio" name="n_itemQuality"
+						value="3">7 <input type="radio" name="n_itemQuality"
+						value="4">8 <input type="radio" name="n_itemQuality"
+						value="5">9 <input type="radio" name="n_itemQuality"
+						value="5">10</td>
 				</tr>
 				<tr>
-					<td>Delivery</td>
+					<th>Delivery</th>
 					<td><input type="radio" name="n_delivery" value="1"
-						checked="checked" />1
-						<input type="radio" name="n_delivery" value="2">2
-						<input type="radio" name="n_delivery" value="3">3
-						<input type="radio" name="n_delivery" value="4">4
-						<input type="radio" name="n_delivery" value="5">5</td>
+						checked="checked" />1 <input type="radio" name="n_delivery"
+						value="2">2 <input type="radio" name="n_delivery"
+						value="3">3 <input type="radio" name="n_delivery"
+						value="4">4 <input type="radio" name="n_delivery"
+						value="5">5 <input type="radio" name="n_delivery"
+						value="2">6 <input type="radio" name="n_delivery"
+						value="3">7 <input type="radio" name="n_delivery"
+						value="4">8 <input type="radio" name="n_delivery"
+						value="5">9 <input type="radio" name="n_delivery"
+						value="5">10</td>
 				</tr>
 				<tr>
 					<td>Comment</td>
@@ -119,7 +130,6 @@
 			<form method="post" action="AddFeedback_Action.jsp">
 				<input name="Submit" value="Rate" type="submit"><br>
 			</form>
-
 	</div>
 
 </body>

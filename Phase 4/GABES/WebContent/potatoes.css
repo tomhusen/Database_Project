@@ -192,7 +192,6 @@ table.inputTable{
 table.inputTable th, td {
     padding: 3px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
 }
 
 .searchField input[type=text] {

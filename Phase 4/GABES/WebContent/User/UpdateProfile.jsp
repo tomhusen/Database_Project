@@ -73,6 +73,11 @@
 					<td><%=rs.getString("USERNAME")%></td>
 				</tr>
 				<tr>
+					<th>New Password</th>
+					<td><input name="password" MaxLength="30"
+						value="<%=rs.getString("PASS")%>"></td>
+				</tr>
+				<tr>
 					<th>Email Address</th>
 					<td><input name="email" MaxLength="30"
 						value="<%=rs.getString("EMAIL")%>"></td>
