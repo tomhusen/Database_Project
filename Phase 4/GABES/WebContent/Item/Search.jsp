@@ -49,9 +49,9 @@
 			<li style="float: right"><a class="active"
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
-	
+
 		<form method="GET" action="SearchResults.jsp">
-	
+
 			<table cellpadding="7">
 				<tr>
 					<th>Item ID</th>
@@ -78,14 +78,14 @@
 						MaxLength="4" value="YYYY" style="width: 50px;"></td>
 				</tr>
 			</table>
-			
-		<form method="post" action="SearchResults.jsp">
-			<input name="Submit" value="Search" type="submit">
-		</form>
-		<!-- Return to previous menu button -->
-		<form method="post" action="../Login_action.jsp">
-			<input name="Submit" value="Return to Menu" type="submit">
-		</form>
+
+			<form method="post" action="SearchResults.jsp">
+				<input name="Submit" value="Search" type="submit">
+			</form>
+			<!-- Return to previous menu button -->
+			<form method="post" action="../Login_action.jsp">
+				<input name="Submit" value="Return to Menu" type="submit">
+			</form>
 	</div>
 </body>
 </html>

@@ -442,6 +442,23 @@ public class Item implements Serializable {
 		return result;
 	}
 	
+	  /**
+	   * Searches for an item based on similar-sounding words to the input string
+	   * @param name
+	   * @return
+	   * @throws SQLException
+	   */
+	  public ResultSet quickSearch(String item_name) throws SQLException {
+	      Connection con = openDBConnection();
+	      PreparedStatement p_stmt = con.prepareStatement(
+	              "Select i.ITEM_ID, i.ITEM_NAME, i.ITEM_CATEGORY, i.START_DATE, i.END_DATE, i.START_PRICE, i.CURRENT_BID, i.STATUS " +
+	                  "FROM team1.GABES_ITEM i " + 
+	                  "WHERE SOUNDEX(i.ITEM_NAME) = SOUNDEX('"+item_name+"') " +
+	              "GROUP BY i.ITEM_ID, i.ITEM_NAME, i.ITEM_CATEGORY, i.START_DATE, i.END_DATE");
+	      ResultSet result = p_stmt.executeQuery();
+	    return result;
+	  }
+	
 	/**
 	 * Method: updateTime()
 	 * 
@@ -453,5 +470,41 @@ public class Item implements Serializable {
 		CallableStatement callStmt = con.prepareCall(" {call team1.GABES_CHECK_TIME()}");
 		callStmt.execute();
 		callStmt.close();
+	}
+	
+	/**
+	 * Method: getAllItemsUserBought(String userId)
+	 * 
+	 * The purpose of this function is to get all items a user has purchased
+	 * 
+	 * @throws IllegalStateException
+	 *             if then method is called when loggedIn = false
+	 */
+	public ResultSet getAllItemsUserBought(String userID) throws IllegalStateException, SQLException {
+		// CHECK THE END DATE SO YOU DONT HAVE ITEMS LISTED THAT HAVE PAST THEIR
+		// END DATE
+		/* Opens Connection and creates a new Statement */
+		Connection con = openDBConnection();
+		Statement stmt = con.createStatement();
+		String queryString = "Select ITEM_ID,ITEM_NAME,ITEM_CATEGORY,END_DATE,CURRENT_BID, USER_ID From team1.GABES_ITEM WHERE STATUS = 1 AND WINNER_ID =" + userID + " ORDER BY ITEM_ID, ITEM_CATEGORY";
+		ResultSet result = stmt.executeQuery(queryString);
+		return result;
+	}
+	
+	/**
+	 * Method: getItemInfo(String itemId)
+	 * 
+	 * The purpose of this method is to use the connection to our Oracle Database
+	 * to get the information about an item that will be presented for the item info page
+	 * 
+	 * @return a ResultSet object containing the record for the matching
+	 *         item from the GABES_ITEM table
+	 */
+	public ResultSet getNameForFeedBack(String itemID) throws SQLException {
+		Connection con = openDBConnection();
+		Statement stmt = con.createStatement();
+		String queryString = "Select ITEM_ID,ITEM_NAME From team1.GABES_ITEM i Where i.ITEM_ID=" + itemID + "";
+		ResultSet result = stmt.executeQuery(queryString);
+		return result;
 	}
 }

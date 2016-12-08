@@ -65,8 +65,10 @@
 
 				<%
 					try {
-						ResultSet rs = user.getAllUserInfo();
+						ResultSet rs = user.getAllUserInfoForCommissionReport();
+						double commissionsTotal = 0;
 						while (rs.next()) {
+							String commissionFee = rs.getString("COMMISSIONS");
 				%>
 				<tr>
 					<td><%=rs.getString("USER_ID")%></td>
@@ -74,16 +76,20 @@
 					<td><%=rs.getString("FIRST_N")%></td>
 					<td><%=rs.getString("LAST_N")%></td>
 					<td><%=rs.getString("EMAIL")%></td>
+					<td><%=rs.getString("SELLER_RATING")%></td>
+					<td><%=rs.getString("COMMISSIONS")%></td>
 				</tr>
 				<%
-					}
+					
+						if (commissionFee != null) {
+								commissionsTotal += Double.parseDouble(commissionFee);
+							
+						}
+						}
 						rs.close();
-					}
-
-					catch (IllegalStateException ise) {
-						out.println(ise.getMessage());
-					}
+					
 				%>
+
 
 				<tr>
 					<td>-</td>
@@ -92,8 +98,16 @@
 					<td>-</td>
 					<td>-</td>
 					<td>-</td>
-					<td></td>
+					<td><%=commissionsTotal%></td>
 				</tr>
+				<%
+					}
+
+					catch (IllegalStateException ise) {
+						out.println(ise.getMessage());
+					}
+				%>
+
 			</tbody>
 		</table>
 	</div>

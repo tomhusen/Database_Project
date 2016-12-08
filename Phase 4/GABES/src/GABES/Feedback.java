@@ -178,5 +178,22 @@ public class Feedback implements Serializable{
 		callStmt.execute();
 		callStmt.close();
 	}
-	
+	/**
+     * Method: getFeedbackInfo()
+     * 
+     * The purpose of this method is to see if a review had been left. If it has, this method will make it so another review cannot be made.
+     * 
+     * @return a ResultSet object containing the record for the matching
+     *         feedback from the GABES_FEEDBACK table
+     */
+    public ResultSet checkIfReviewHasBeenLeft() throws IllegalStateException, SQLException {
+            Connection con = openDBConnection();
+            Statement stmt = con.createStatement();
+            /** Proceeds if user is logged in */
+            String queryString = "Select * From team1.GABES_FEEDBACK";// Where ITEM_ID="
+                            //+ itemId + "";
+            ResultSet result = stmt.executeQuery(queryString);
+            return result;
+    }
+
 }

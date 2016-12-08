@@ -1,16 +1,16 @@
 <%@ page language="java" import="java.sql.*"%>
 <jsp:useBean id="feedback" class="GABES.Feedback" scope="session" />
+<jsp:useBean id="item" class="GABES.Item" scope="session" />
 <jsp:useBean id="user" class="GABES.User" scope="session" />
 
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../potatoes.css">
-<title>Leave Feedback</title>
+<title>Add Feedback</title>
 </head>
 <body style="background-color: #a7adba">
 	<div class="form-style-2">
-
 		<ul>
 			<li><a class="active" href="../Login_action.jsp">Home</a></li>
 			<li class="dropdown"><a href="javascript:void(0)"
@@ -36,7 +36,7 @@
 						href="../Item/ItemList.jsp">View My Listed Items</a>
 				</div></li>
 			<%
-				if (user.isThisUserAdmin()) {
+			if (user.isThisUserAdmin()) {
 			%>
 			<!-- Admin Dropdown Menu -->
 			<li class="dropdown"><a href="javascript:void(0)"
@@ -49,39 +49,55 @@
 			<%
 				}
 			%>
+
 			<li style="float: right"><a class="active"
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
+
+		<!-- Heading at top of the page -->
+		<div class="form-style-2-heading">Please Enter Information about
+			User Below</div>
+
 		<form method="GET" action="AddFeedback_Action.jsp">
-			<br>
-			<table class="inputTable">
+			<%
+				String itemID = request.getParameter("id");
+
+				try {
+					item.updateTime();
+					ResultSet rs = item.getNameForFeedBack(itemID);
+					while (rs.next()) {
+			%>
+			<table>
 				<tr>
 					<td>Item ID</td>
-					<td><input name="n_itemId" value=""></td>
+					<td> <input name="n_itemId" value="<%=rs.getString("ITEM_ID")%>" type="hidden"><%=rs.getString("ITEM_ID")%></td>
 				</tr>
 				<tr>
 					<td>Item Name</td>
-					<td><input name="n_itemName" value=""></td>
+					<td ><%=rs.getString("ITEM_NAME")%></td>
 				</tr>
 				<tr>
 					<td>Overall Rating</td>
-					<td><input name="n_overallRating" value=""></td>
+					<td><input type="number" name="n_overallRating" min="0"
+						max="10" step="1" value="1"></td>
 				</tr>
 				<tr>
 					<td>Item Quality</td>
-					<td><input type="radio" name="n_itemQuality" value="1">1</td>
-					<td><input type="radio" name="n_itemQuality" value="2">2</td>
-					<td><input type="radio" name="n_itemQuality" value="3">3</td>
-					<td><input type="radio" name="n_itemQuality" value="4">4</td>
-					<td><input type="radio" name="n_itemQuality" value="5">5</td>
+					<td><input type="radio" name="n_itemQuality" value="1"
+						checked="checked" />1
+						<input type="radio" name="n_itemQuality" value="2">2
+					<input type="radio" name="n_itemQuality" value="3">3
+					<input type="radio" name="n_itemQuality" value="4">4
+					<input type="radio" name="n_itemQuality" value="5">5</td>
 				</tr>
 				<tr>
 					<td>Delivery</td>
-					<td><input type="radio" name="n_delivery" value="1">1</td>
-					<td><input type="radio" name="n_delivery" value="2">2</td>
-					<td><input type="radio" name="n_delivery" value="3">3</td>
-					<td><input type="radio" name="n_delivery" value="4">4</td>
-					<td><input type="radio" name="n_delivery" value="5">5</td>
+					<td><input type="radio" name="n_delivery" value="1"
+						checked="checked" />1
+						<input type="radio" name="n_delivery" value="2">2
+						<input type="radio" name="n_delivery" value="3">3
+						<input type="radio" name="n_delivery" value="4">4
+						<input type="radio" name="n_delivery" value="5">5</td>
 				</tr>
 				<tr>
 					<td>Comment</td>
@@ -91,14 +107,20 @@
 
 			</table>
 
+			<%
+				}
+				}
+
+				catch (IllegalStateException ise) {
+					out.println(ise.getMessage());
+				}
+			%>
 			<!-- Add User Button -->
 			<form method="post" action="AddFeedback_Action.jsp">
 				<input name="Submit" value="Rate" type="submit"><br>
 			</form>
-			<!-- Return to previous menu button -->
-			<form method="post" action="../Login_action.jsp">
-				<input name="Submit" value="Return to Menu" type="submit"><br>
-			</form>
+
 	</div>
+
 </body>
 </html>

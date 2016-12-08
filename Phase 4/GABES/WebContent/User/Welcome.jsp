@@ -34,7 +34,9 @@
 					<a href="../Item/AddNewItem.jsp">List New Item</a> <a
 						href="../Item/ItemList.jsp">View My Listed Items</a>
 				</div></li>
-				<%if(user.isThisUserAdmin()){%>
+			<%
+				if (user.isThisUserAdmin()) {
+			%>
 			<!-- Admin Dropdown Menu -->
 			<li class="dropdown"><a href="javascript:void(0)"
 				class="dropbtn">Admin Options</a>
@@ -43,7 +45,10 @@
 						href="AdminCommissionReport.jsp">View Commission Report</a> <a
 						href="SalesSummary.jsp">View Sales Summary</a>
 				</div></li>
-				<%} %>
+			<%
+				}
+			%>
+
 			<li style="float: right"><a class="active"
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
@@ -54,7 +59,11 @@
 				<%=user.getUsername()%>
 			</h3>
 			<br>
-			<iframe src="//giphy.com/embed/tDXI69AqdGEHS" width="200" height="200" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="http://giphy.com/gifs/images-potato-tDXI69AqdGEHS"></a></p>
+			<p>
+				<a href="../cats.html"><img src="../images/giphy.gif" height="200"
+					width="200"></a>
+			</p>
+
 		</center>
 	</div>
 </body>

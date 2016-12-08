@@ -361,120 +361,28 @@ public class User implements Serializable {
 		callStmt.execute();
 		callStmt.close();
 	}
-	
-//	/**
-//	 * Method: getItemInfo()
-//	 * 
-//	 * @return a ResultSet containing all transactions made by the customer
-//	 *         whose customer number is stored in class field customerNumber.
-//	 * @throws IllegalStateException
-//	 *             if then method is called when loggedIn = false
-//	 */
-//	public ResultSet getAllTransactions() throws IllegalStateException, SQLException {
-//		/* Checks whether the user is logged in */
-//		if (isLoggedIn() == false)
-//			throw new IllegalStateException();
-//		/* Opens Connection and creates a new Statement */
-//		Connection con = openDBConnection();
-//		Statement stmt = con.createStatement();
-//		String queryString = "Select * From PRODUCTDEALS_TRANS ";
-//		queryString += "Where CUSTOMER_NUMBER='" + this.customerNumber + "'";
-//		ResultSet result = stmt.executeQuery(queryString);
-//
-//		return result;
-//	}
-//
-//	/**
-//	 *************************************** COMPLETE ME*************************************** This method uses a
-//	 * Statement object to query the ProductDeals_TRANSPART table for all
-//	 * transaction parts that belong to the transaction whose number is
-//	 * specified as a parameter.
-//	 * 
-//	 * @param transNumber
-//	 *            the transaction number for which we need all the transaction
-//	 *            parts from table ProductDeals_TRANSPART
-//	 * @return a ResultSet containing all transaction parts that belong to the
-//	 *         transaction whose number is specified as a parameter.
-//	 * @throws IllegalStateException
-//	 *             if then method is called when loggedIn = false
-//	 */
-//	public ResultSet getTransactionParts(String transNumber) throws IllegalStateException, SQLException {
-//		// Checks if user is currently logged in
-//		if (isLoggedIn() == false)
-//			throw new IllegalStateException();
-//		// Open Connection, create Statment and Query
-//		Connection con = openDBConnection();
-//		Statement stmt = con.createStatement();
-//		String queryString = "Select * From PRODUCTDEALS_TRANSPART Where TRANS_NUMBER='" + transNumber + "'";
-//		// Executes the query, then returns the ResultSet
-//		ResultSet result = stmt.executeQuery(queryString);
-//		return result;
-//	}
-//
-//	/**
-//	 *************************************** COMPLETE ME*************************************** This method uses a
-//	 * PreparedStatement object to call an SQL stored function Function
-//	 * ProductDeals_getTransVal(transNum varchar) to get the total $ value for a
-//	 * given transaction whose number is specified as a parameter.
-//	 * 
-//	 * @param transNumber
-//	 *            the transaction number for which we need the total $ value
-//	 * @return the total $ value for the transaction whose number is specified
-//	 *         as a parameter.
-//	 * @throws IllegalStateException
-//	 *             if then method is called when loggedIn = false
-//	 */
-//	public double getTransactionTotalValue(String transNumber) throws IllegalStateException, SQLException {
-//
-//		if (isLoggedIn() == false)
-//			throw new IllegalStateException();
-//		double finalReturn = 0;
-//
-//		Connection con = openDBConnection();
-//		String queryString = "Select ProductDeals_getTransVal(?) from dual";
-//		/*
-//		 * Declares PreparedStatement, clears the old values, and then passes
-//		 * the new ones
-//		 */
-//		PreparedStatement p_stmt = con.prepareCall(queryString);
-//		/* Set new attribute values */
-//		p_stmt.clearParameters();
-//		p_stmt.setString(1, transNumber);
-//
-//		/* Executes the Prepared Statement query */
-//		ResultSet result = p_stmt.executeQuery();
-//		if (result.next()) {
-//			finalReturn = result.getDouble(1);
-//			System.out.println(finalReturn);
-//		}
-//		return finalReturn;
-//
-//	}
-//
-//	public String getPartDescription(String partNumber) throws IllegalStateException, SQLException {
-//
-//		if (isLoggedIn() == false)
-//			throw new IllegalStateException();
-//		String finalReturn = "";
-//
-//		Connection con = openDBConnection();
-//		String queryString = "Select PART_DESCRIPTION from PRODUCTDEALS_PART WHERE PART_NUMBER =?";
-//		/*
-//		 * Declares PreparedStatement, clears the old values, and then passes
-//		 * the new ones
-//		 */
-//		PreparedStatement p_stmt = con.prepareCall(queryString);
-//		/* Set new attribute values */
-//		p_stmt.clearParameters();
-//		p_stmt.setString(1, partNumber);
-//
-//		/* Executes the Prepared Statement query */
-//		ResultSet result = p_stmt.executeQuery();
-//		if (result.next()) {
-//			finalReturn = result.getString(1);
-//			System.out.println(finalReturn);
-//		}
-//		return finalReturn;
-//
-//	}
+	/**
+	 * Method: getAllUserInfoForCommissionReport()
+	 * 
+	 * The purpose of this method is to get all the user info with Seller Rating and Commissions
+	 * 
+	 * @return a ResultSet object containing the records for all the
+	 *         customers from the GABES_USER table
+	 * @throws IllegalStateException
+	 *             if then method is called when loggedIn = false
+	 */
+	public ResultSet getAllUserInfoForCommissionReport() throws IllegalStateException, SQLException {
+		Connection con = openDBConnection();
+		Statement stmt = con.createStatement();
+		/** Checks the 'logged in' boolean */
+		if (isLoggedIn() == false)
+			throw new IllegalStateException();
+		/** Proceeds if user is logged in */
+		String queryString = "SELECT u.USER_ID, u.USERNAME, u.FIRST_N, u.LAST_N, u.EMAIL, AVG(f.OVERALL_RATING) AS SELLER_RATING, SUM(i.COMMISSION_FEE) AS COMMISSIONS"
+				+ " FROM GABES_FEEDBACK f, GABES_ITEM i, GABES_USER u"
+				+ " WHERE f.ITEM_ID = i.ITEM_ID AND i.USER_ID = u.USER_ID"
+				+ " GROUP BY u.USER_ID, u.USERNAME, u.FIRST_N, u.LAST_N, u.EMAIL";
+		ResultSet result = stmt.executeQuery(queryString);
+		return result;
+	}
 }
