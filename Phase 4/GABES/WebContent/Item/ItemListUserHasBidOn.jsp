@@ -1,6 +1,7 @@
 <%@ page language="java" import="java.sql.*"%>
 <jsp:useBean id="bid" class="GABES.Bid" scope="session" />
 <jsp:useBean id="user" class="GABES.User" scope="session" />
+<jsp:useBean id="item" class="GABES.Item" scope="page" />
 
 
 <html>
@@ -80,6 +81,7 @@
 
 				<%
 					try {
+						item.updateTime();
 						ResultSet rs = bid.itemsUserHasBidOn(user.getUserID());
 						while (rs.next()) {
 							String winner = rs.getString("WINNER_ID");

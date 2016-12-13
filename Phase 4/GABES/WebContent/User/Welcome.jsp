@@ -48,7 +48,12 @@
 			<%
 				}
 			%>
-
+			<li class="searchField"> 		
+			<form method="GET" action="../Item/QuickSearchResults.jsp">
+				<a>
+				<input name="s_keyword" placeholder="Search by Keyword"></a> 
+				</form>
+				</li>
 			<li style="float: right"><a class="active"
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>

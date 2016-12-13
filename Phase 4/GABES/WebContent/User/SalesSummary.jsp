@@ -52,6 +52,11 @@
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
 		<br>
+		<%
+			if (!user.isThisUserAdmin()) {
+				response.sendRedirect("Welcome.jsp");
+			}
+		%>
 		<table class="resultTable">
 			<tbody>
 				<tr>

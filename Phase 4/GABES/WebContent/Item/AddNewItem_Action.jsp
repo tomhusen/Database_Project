@@ -19,9 +19,15 @@
 
 	try{
 		item.addNewItem(n_category, n_description, n_itemName, n_startPrice, n_endDate, user.getUserID());
+		response.sendRedirect("ItemList.jsp");
 	}	
-	catch(IllegalStateException ise){
-		out.println(ise.getMessage());
+	catch(java.lang.IllegalStateException ise){
+		//out.println(ise.getMessage());
+		response.sendRedirect("ListItemDateErrorPage.jsp");
+	}catch(SQLDataException sde){
+		response.sendRedirect("ListItemDateErrorPage.jsp");
+		
+	}catch(java.sql.SQLSyntaxErrorException sqlsee){
+		response.sendRedirect("ListItemDateErrorPage.jsp");
 	}
-	response.sendRedirect("../Login_action.jsp");
 %> 

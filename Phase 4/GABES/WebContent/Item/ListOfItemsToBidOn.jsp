@@ -11,8 +11,8 @@
 <jsp:useBean id="user" class="GABES.User" scope="session" />
 <body style="background-color: #a7adba">
 
-	<div class="form-style-2">
-		<ul>
+	<div class="form-style-2">		
+	<ul>
 			<li><a class="active" href="../Login_action.jsp">Home</a></li>
 			<li class="dropdown"><a href="javascript:void(0)"
 				class="dropbtn">My GABeS</a>
@@ -51,6 +51,7 @@
 			<%
 				}
 			%>
+
 			<li style="float: right"><a class="active"
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
@@ -62,10 +63,10 @@
 			an item, the current bid is 0. This first bid must be higher than the
 			starting price.</div>
 		<div class="form-style-3-heading">Once a bid greater than the
-			starting price has been made, your bid must be greater than
-			the current bid.</div>
-		<div class="form-style-3-heading">The
-			user with the highest bid at the end time will win the item!</div>
+			starting price has been made, your bid must be greater than the
+			current bid.</div>
+		<div class="form-style-3-heading">The user with the highest bid
+			at the end time will win the item!</div>
 		<br>
 		<div class="form-style-2-heading">Let the bidding begin!</div>
 

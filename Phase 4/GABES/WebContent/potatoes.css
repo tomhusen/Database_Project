@@ -134,10 +134,12 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #333;
+    vertical-align: center;
 }
 
 li {
     float: left;
+    
 }
 
 li a {
@@ -147,6 +149,7 @@ li a {
     padding: 14px 16px;
     text-decoration: none;
 }
+
 li a:hover {
     background-color: #111;
 }
@@ -197,21 +200,6 @@ table.inputTable{
 table.inputTable th, td {
     padding: 3px;
     text-align: left;
-}
-
-.searchField input[type=text] {
-    width: 200px;
-    box-sizing: border-box;
-    border: 2px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
-    background-color: white;
-    background-image: url('searchicon.png');
-    background-position: 10px 10px; 
-    background-repeat: no-repeat;
-    padding: 12px 20px 12px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
 }
 
 </style>

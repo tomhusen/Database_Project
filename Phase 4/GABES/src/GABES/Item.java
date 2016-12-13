@@ -439,7 +439,7 @@ public class Item implements Serializable {
 
 			String queryString = "Select i.ITEM_ID, i.ITEM_NAME, i.ITEM_CATEGORY, i.START_DATE, i.END_DATE, i.START_PRICE, i.CURRENT_BID, i.STATUS ";
 			queryString += "From team1.GABES_ITEM i ";
-			queryString += "Where i.ITEM_NAME LIKE ? AND i.ITEM_CATEGORY LIKE ? AND i.STATUS=0";
+			queryString += "Where lower(i.ITEM_NAME) LIKE lower(?) AND LOWER(i.ITEM_CATEGORY) LIKE LOWER(?) AND i.STATUS=0";
 			// Below here is done - End Date and Bid Range
 			queryString += "AND ((i.CURRENT_BID>? AND i.CURRENT_BID<?) OR (i.CURRENT_BID IS NULL AND i.START_PRICE>? AND i.START_PRICE<?))";
 			queryString += "AND i.END_DATE < TO_TIMESTAMP('" + endDate + " 23:59:59', 'YYYY-MM-DD HH24:MI:SS')";

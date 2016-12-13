@@ -15,8 +15,8 @@
 			<li class="dropdown"><a href="javascript:void(0)"
 				class="dropbtn">My GABeS</a>
 				<div class="dropdown-content">
-					<a>User: <%=user.getUsername()%></a>
-					<a href="../User/UpdateProfile.jsp">Update My Profile</a> <a
+					<a>User: <%=user.getUsername()%></a> <a
+						href="../User/UpdateProfile.jsp">Update My Profile</a> <a
 						href="../User/ViewMyFeedback.jsp">View My Feedback</a>
 				</div></li>
 			<!-- Items Menu -->
@@ -101,25 +101,25 @@
 						<form method="GET" action="ItemInfoForSaleList.jsp">
 							<input id="id" name="id" value=<%=rs.getString("ITEM_ID")%>
 								type="hidden"><input value="Item Info" type="submit">
-						</form>
-					</td>
+						</form></td>
 					<!-- passes the user number to the bidder list -->
 					<td><br>
 						<form method="GET" action="PlaceBid.jsp">
 							<input id="itemID" name="id" value=<%=rs.getString("ITEM_ID")%>
-								type="hidden"><input value="Place Bid"
-								type="submit">
-						</form>
-					</td>
+								type="hidden"><input value="Place Bid" type="submit">
+						</form></td>
 				</tr>
 
 				<%
 					}
 						rs.close();
-					}
-
-					catch (IllegalStateException ise) {
+					} catch (IllegalStateException ise) {
 						out.println(ise.getMessage());
+					} catch (SQLDataException sde) {
+						response.sendRedirect("SearchDateErrorPage.jsp");
+
+					} catch (java.sql.SQLSyntaxErrorException sqlsee) {
+						response.sendRedirect("SearchDateErrorPage.jsp");
 					}
 				%>
 

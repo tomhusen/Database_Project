@@ -70,11 +70,11 @@
 					<th></th>
 				</tr>
 				<%
-					String s_itemName = request.getParameter("s_itemName");
-
+					String s_keyword = request.getParameter("s_keyword");
+					System.out.println("KEYWORD: " + s_keyword);
 					try {
 						item.updateTime();
-						ResultSet rs = item.quickSearch(s_itemName);
+						ResultSet rs = item.search("ID", s_keyword, "Category", "Min", "Max", "YYYY-MM-DD");
 						while (rs.next()) {
 				%>
 
@@ -89,29 +89,29 @@
 					<td><%=rs.getInt("STATUS")%></td>
 
 					<!--  Buttons -->
-					<td>
-						<form method="GET" action="ItemInfo.jsp">
-							<input id="itemID" name="id" value=<%=rs.getString("ITEM_ID")%>
+					<td><br>
+						<form method="GET" action="ItemInfoForSaleList.jsp">
+							<input id="id" name="id" value=<%=rs.getString("ITEM_ID")%>
 								type="hidden"><input value="Item Info" type="submit">
-						</form>
-					</td>
+						</form></td>
 					<!-- passes the user number to the bidder list -->
-					<td>
-						<form method="GET" action="BidderList.jsp">
-							<input id="transID" name="transNumber"
-								value=<%=rs.getString("ITEM_ID")%> type="hidden"> <input
-								value="Bidder List" type="submit">
-						</form>
-					</td>
+					<td><br>
+						<form method="GET" action="PlaceBid.jsp">
+							<input id="itemID" name="id" value=<%=rs.getString("ITEM_ID")%>
+								type="hidden"><input value="Place Bid" type="submit">
+						</form></td>
 				</tr>
 
 				<%
 					}
 						rs.close();
-					}
-
-					catch (IllegalStateException ise) {
+					} catch (IllegalStateException ise) {
 						out.println(ise.getMessage());
+					} catch (SQLDataException sde) {
+						response.sendRedirect("SearchDateErrorPage.jsp");
+
+					} catch (java.sql.SQLSyntaxErrorException sqlsee) {
+						response.sendRedirect("SearchDateErrorPage.jsp");
 					}
 				%>
 

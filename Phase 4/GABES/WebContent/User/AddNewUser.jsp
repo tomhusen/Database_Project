@@ -48,11 +48,16 @@
 			<%
 				}
 			%>
+
 			<li style="float: right"><a class="active"
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
 		<form method="GET" action="AddUser_Action.jsp">
-
+			<% 
+			if (!user.isThisUserAdmin()) {
+				response.sendRedirect("Welcome.jsp");
+			}
+			%>
 			<table class="inputTable">
 				<tr>
 					<th>Username</th>

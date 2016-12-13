@@ -91,10 +91,7 @@
 			</tr>
 				<tr>
 					<th>End Date</th>
-					<td><input name="month" MaxLength="2" value="MM"
-						style="width: 25px;">- <input name="day" MaxLength="2"
-						value="DD" style="width: 25px;">- <input name="year"
-						MaxLength="4" value="YYYY" style="width: 50px;"></td>
+					<td><input name="end_date" MaxLength="25" value="<%=rs.getString("END_DATE")%>"></td>
 				</tr>
 			<tr>
 				<th>Description</th>

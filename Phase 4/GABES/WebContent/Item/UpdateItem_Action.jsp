@@ -13,12 +13,7 @@
 		System.out.println("Action desc: " + desc);
 		String name = request.getParameter("item_name");
 		System.out.println("Action name: " + name);
-
-		String i_month = request.getParameter("month");
-		String i_day = request.getParameter("day");
-		String i_year = request.getParameter("year");
-		// Concat into 1 date string
-		String endDate = i_year + "-" + i_month + "-" + i_day;
+		String endDate = request.getParameter("end_date");
 		System.out.println("Action endDate: " + endDate);
 
 		item1.editItemInfo(itemID, cat, desc, name, endDate);

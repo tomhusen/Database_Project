@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link rel="stylesheet" type="text/css" href="../potatoes.css">
-<title>Add New Item</title>
+<title>Search Error</title>
 </head>
 <body style="background-color: #a7adba">
 	<div class="form-style-2">
@@ -49,60 +49,26 @@
 			<%
 				}
 			%>
-			
 			<li style="float: right"><a class="active"
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
 		<!-- Heading at top of the page -->
 		<br>
-		<div class="form-style-2-heading">List New Item</div>
+		<div class="form-style-2-heading">Error While Searching For An Item</div>
 
-		<form method="GET" action="AddNewItem_Action.jsp">
-
-			<table class="inputTable">
-				<tr>
-					<th>Item Name</th>
-					<td><input name="n_itemName" MaxLength=30 value=""></td>
-				</tr>
-				<tr>
-					<th>Category</th>
-					<td><input name="n_category" MaxLength="15" value=""></td>
-				</tr>
-				<tr>
-					<th>Starting Price</th>
-					<td><input name="n_startPrice" MaxLength="10" value="" min=0
-						max=99999.99></td>
-				</tr>
-				<tr>
-					<th>End</th>
-					<td>Date: <input name="month" MaxLength="2" value="MM"
-						style="width: 25px;">- <input name="day" MaxLength="2"
-						value="DD" style="width: 25px;">- <input name="year"
-						MaxLength="4" value="YYYY" style="width: 50px;"> Time
-						(24Hr): <input name="hour" MaxLength="2" value="hh"
-						style="width: 25px;">: <input name="min" MaxLength="2"
-						value="mm" style="width: 25px;">: <input name="sec"
-						MaxLength="2" value="ss" style="width: 25px;">
-
-
-					</td>
-				</tr>
-				<tr>
-					<th>Description</th>
-					<td><textarea name="n_description" cols="50" rows="4"></textarea></td>
-				</tr>
-
-
-			</table>
+			<div class="form-style-3-heading">Please be careful when selecting dates to search by. Trying to search for an item with an end date that is impossible (ex. 14-09-2018) will not work. </div>
+			<br>
+			<div class="form-style-3-heading">Going forward, please double check to make sure that the date is correct.  </div>
+			<br>
 			<br>
 			<p>
 
 
 				<!-- Add User Button -->
-			<form method="post" action="AddNewItem_Action.jsp">
-				<input name="Submit" value="Post Item" type="submit"><br>
+			<form method="post" action="Search.jsp">
+				<input name="Submit" value="I Understand." type="submit"><br>
 			</form>
-			<Strong>Note:</Strong> Please fill out all fields
+			<Strong>Note:</Strong> Please double check all date fields before submitting to avoid errors.
 			</p>
 	</div>
 

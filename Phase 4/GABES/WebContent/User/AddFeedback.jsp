@@ -49,7 +49,12 @@
 			<%
 				}
 			%>
-
+			<li class="searchField"> 		
+			<form method="GET" action="../Item/QuickSearchResults.jsp">
+				<a>
+				<input name="s_keyword" placeholder="Search by Keyword"></a> 
+				</form>
+				</li>
 			<li style="float: right"><a class="active"
 				href="../Logout_action.jsp">Logout</a></li>
 		</ul>
@@ -79,8 +84,17 @@
 				</tr>
 				<tr>
 					<th>Overall Rating</th>
-					<td><input type="number" name="n_overallRating" min="0"
-						max="10" step="1" value="1"></td>
+					<td><input type="radio" name="n_overallRating" value="1"
+						checked="checked" />1 <input type="radio" name="n_overallRating"
+						value="2">2 <input type="radio" name="n_overallRating"
+						value="3">3 <input type="radio" name="n_overallRating"
+						value="4">4 <input type="radio" name="n_overallRating"
+						value="5">5 <input type="radio" name="n_overallRating"
+						value="6">6 <input type="radio" name="n_overallRating"
+						value="7">7 <input type="radio" name="n_overallRating"
+						value="8">8 <input type="radio" name="n_overallRating"
+						value="9">9 <input type="radio" name="n_overallRating"
+						value="10">10</td>
 				</tr>
 				<tr>
 					<th>Item Quality</th>
@@ -90,11 +104,11 @@
 						value="3">3 <input type="radio" name="n_itemQuality"
 						value="4">4 <input type="radio" name="n_itemQuality"
 						value="5">5 <input type="radio" name="n_itemQuality"
-						value="2">6 <input type="radio" name="n_itemQuality"
-						value="3">7 <input type="radio" name="n_itemQuality"
-						value="4">8 <input type="radio" name="n_itemQuality"
-						value="5">9 <input type="radio" name="n_itemQuality"
-						value="5">10</td>
+						value="6">6 <input type="radio" name="n_itemQuality"
+						value="7">7 <input type="radio" name="n_itemQuality"
+						value="8">8 <input type="radio" name="n_itemQuality"
+						value="9">9 <input type="radio" name="n_itemQuality"
+						value="10">10</td>
 				</tr>
 				<tr>
 					<th>Delivery</th>
@@ -104,11 +118,11 @@
 						value="3">3 <input type="radio" name="n_delivery"
 						value="4">4 <input type="radio" name="n_delivery"
 						value="5">5 <input type="radio" name="n_delivery"
-						value="2">6 <input type="radio" name="n_delivery"
-						value="3">7 <input type="radio" name="n_delivery"
-						value="4">8 <input type="radio" name="n_delivery"
-						value="5">9 <input type="radio" name="n_delivery"
-						value="5">10</td>
+						value="6">6 <input type="radio" name="n_delivery"
+						value="7">7 <input type="radio" name="n_delivery"
+						value="8">8 <input type="radio" name="n_delivery"
+						value="9">9 <input type="radio" name="n_delivery"
+						value="10">10</td>
 				</tr>
 				<tr>
 					<td>Comment</td>
