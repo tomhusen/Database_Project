@@ -64,6 +64,7 @@
 				item1.updateTime();
 				ResultSet rs = item1.getItemInfoToEdit(itemID);
 				while (rs.next()) {
+					String itemName = rs.getString("ITEM_CATEGORY");
 		%>
 		<table class="inputTable">
 			<tr>
@@ -78,7 +79,7 @@
 			<tr>
 				<th>Category</th>
 				<td><input name="item_category"
-					value="<%=rs.getString("ITEM_CATEGORY")%>"></td>
+					value=<%=itemName %>></td>
 			</tr>
 			<tr>
 				<th>Start Price</th>
@@ -112,8 +113,15 @@
 		<!-- Update Profile Button -->
 		<br>
 		<form method="GET" action="UpdateItem_Action.jsp">
-			<input id="id" name="id" value=<%=itemID%>
-				type="hidden"><input value="Update Info" type="submit">
+			<input id="item_name" name="item_name" value=item_name type="hidden">
+			<input id="item_category" name="item_category" value=item_category type="hidden">
+			<input id="description" name="description" value=description type="hidden">
+			
+			<input id="month" name="month" value=month type="hidden">
+			<input id="day" name="day" value=day type="hidden">
+			<input id="year" name="year" value=year type="hidden">
+			
+				<input value="Update Info" type="submit">
 		</form>
 
 		<!-- Return to previous menu button -->
